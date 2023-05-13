@@ -11,6 +11,7 @@ import { FavoritoComponent } from './pagina/favorito/favorito.component';
 import { ProductoComponent } from './pagina/producto/producto.component';
 import { MyCartComponent } from './pagina/my-cart/my-cart.component';
 import { DetalleProductoComponent } from './pagina/detalle-producto/detalle-producto.component';
+import { CarritoComponent } from './pagina/carrito/carrito.component';
 
 
 
@@ -26,7 +27,8 @@ import { DetalleProductoComponent } from './pagina/detalle-producto/detalle-prod
     FavoritoComponent,
     ProductoComponent,
     MyCartComponent,
-    DetalleProductoComponent
+    DetalleProductoComponent,
+    CarritoComponent
   ],
   imports: [
     BrowserModule,

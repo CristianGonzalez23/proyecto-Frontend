@@ -1,0 +1,28 @@
+<form #f="ngForm" (ngSubmit)="registrar()">
+    <div>
+        <label>Nombre:</label>
+        <input type="text" name="nombre" [(ngModel)]="usuario.nombre" required minlength="3" maxlength="50" />
+    </div>
+    <div>
+        <label>Email: </label>
+        <input type="email" name="email" [(ngModel)]="usuario.email" email required minlength="5" maxlength="50" />
+    </div>
+    <div>
+        <label>Dirección: </label>
+        <input type="text" name="direccion" [(ngModel)]="usuario.direccion" required minlength="3" maxlength="50" />
+    </div>
+    <div>
+        <label>Teléfono: </label>
+        <input type="text" name="telefono" [(ngModel)]="usuario.telefono" required minlength="2" maxlength="11" />
+    </div>
+    <div>
+        <label>Contraseña: </label>
+        <input type="password" name="password" [(ngModel)]="usuario.password" required minlength="2" maxlength="50" />
+    </div>
+    <div>
+        <label>Repetir contraseña: </label>
+        <input type="password" name="confirmaPassword" [(ngModel)]="usuario.confirmaPassword" required />
+        <p *ngIf="!sonIguales()">Las contraseñas no coinciden</p>
+    </div>
+    <button type="submit" [disabled]="f.invalid || !sonIguales()">Registrarse</button>
+</form>

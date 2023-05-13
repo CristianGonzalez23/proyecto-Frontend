@@ -10,6 +10,7 @@ import { CreacionProductoComponent } from './pagina/creacion-producto/creacion-p
 import { FavoritoComponent } from './pagina/favorito/favorito.component';
 import { ProductoComponent } from './pagina/producto/producto.component';
 import { MyCartComponent } from './pagina/my-cart/my-cart.component';
+import { DetalleProductoComponent } from './pagina/detalle-producto/detalle-producto.component';
 
 
 
@@ -24,7 +25,8 @@ import { MyCartComponent } from './pagina/my-cart/my-cart.component';
     CreacionProductoComponent,
     FavoritoComponent,
     ProductoComponent,
-    MyCartComponent
+    MyCartComponent,
+    DetalleProductoComponent
   ],
   imports: [
     BrowserModule,

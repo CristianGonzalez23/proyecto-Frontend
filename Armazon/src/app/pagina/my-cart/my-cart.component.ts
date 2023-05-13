@@ -17,8 +17,5 @@ export class MyCartComponent {
   public comprar(){
     console.log(this.compra);
   }
-  
-
-
 
 }

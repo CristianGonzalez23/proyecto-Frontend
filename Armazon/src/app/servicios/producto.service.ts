@@ -46,4 +46,20 @@ export class ProductoService {
   public listar(): PublicacionProductoGetDTO[] {
     return this.productos;
   }
+  //FALTA CORREGIR EL METODO, SOLO LO CREE PARA ELIMINAR EL ERROR
+  public obtener(codigo: number): PublicacionProductoGetDTO {
+    // Busca la publicación correspondiente al código dado
+    const publicacion = this.productos.find(
+      (p) => p.productoGetDTO.codigo === codigo
+    );
+    // Lanza un error si no se encuentra la publicación
+    if (!publicacion) {
+      throw new Error(
+        `No se encontró una publicación con el código ${codigo}.`
+      );
+    }
+
+    // Devuelve la publicación encontrada
+    return publicacion;
+  }
 }

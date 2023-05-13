@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ComentarioGetDTO } from 'src/app/modelo/comentario-get-dto';
+import { ProductoGetDTO } from 'src/app/modelo/producto-get-dto';
 import { PublicacionProductoDTO } from 'src/app/modelo/publicacion-producto-dto';
 
 @Component({
@@ -11,7 +13,20 @@ export class CreacionProductoComponent {
 
   producto: PublicacionProductoDTO;
   constructor() {
-    this.producto = new PublicacionProductoDTO();
+    this.producto = new PublicacionProductoDTO(
+      500000,
+      20,
+      'alguna descripcion',
+      1,
+      1,
+      new ProductoGetDTO(
+        1,
+        'Televisor LG 4K',
+        ['https://picsum.photos/450/225', 'https://picsum.photos/450/225'],
+        ['TECNOLOGIA'],
+        ['ARMENIA']
+      ),
+      new ComentarioGetDTO('algun texto', 0, 0, 0));
     this.categorias = [];
     this.ciudades = [];
   }

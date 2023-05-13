@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CarritoService } from 'src/app/servicios/carrito.service';
 import { DetalleCompraDTO } from 'src/app/modelo/detalle-compra-dto';
+import { PublicacionProductoDTO } from 'src/app/modelo/publicacion-producto-dto';
+import { ProductoDTO } from 'src/app/modelo/producto-dto';
+import { ComentarioDTO } from 'src/app/modelo/comentario-dto';
 
 @Component({
   selector: 'app-detalle-producto',
@@ -11,7 +14,7 @@ import { DetalleCompraDTO } from 'src/app/modelo/detalle-compra-dto';
 export class DetalleProductoComponent implements OnInit {
 
   codigoProducto: number = 0;
-  detalleCompra: DetalleCompraDTO = new DetalleCompraDTO(1,1);
+  detalleCompra: DetalleCompraDTO = new DetalleCompraDTO(1, new PublicacionProductoDTO(0,0,"",0,0, new ProductoDTO("",[],[],[]), new ComentarioDTO("",0,0,0)));
 
   constructor(
     private route: ActivatedRoute,

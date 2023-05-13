@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class CarritoComponent {
 
+  carrito:;
+  constructor() {
+      this.carrito = new UsuarioDTO();
+  }
 }

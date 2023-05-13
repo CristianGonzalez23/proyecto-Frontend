@@ -23,9 +23,9 @@ export class DetalleProductoComponent implements OnInit {
     this.codigoProducto = codigo ? parseInt(codigo) : 0;
   }
 
-  agregarCarrito(): void {
+  public agregarCarrito(){
     this.carritoService.agregar(this.codigoProducto);
-  }
+    }
   
   quitarCarrito(): void {
     this.carritoService.quitar(this.codigoProducto);

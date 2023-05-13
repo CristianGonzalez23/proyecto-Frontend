@@ -18,10 +18,11 @@
         <li><a routerLink="/registro" class="nav-link px-2 text-white">Registro</a></li>
         <li><a routerLink="/publicacionProducto" class="nav-link px-2 text-white">Publicacion Producto</a></li>
       </ul>
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-        <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" (submit)="iraBusqueda(textoBusqueda.value)">
+        <input #textoBusqueda type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
           aria-label="Search">
       </form>
+
       <div class="text-end">
         <button type="button" routerLink="/login" class="btn btn-outline-light
     me-2">Login</button>

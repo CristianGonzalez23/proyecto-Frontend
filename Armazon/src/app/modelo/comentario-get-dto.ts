@@ -1,4 +1,4 @@
-export class ComentarioDTO {
+export class ComentarioGetDTO {
   texto: string = '';
   estrellas: number = 0;
   codigoUsuario: number = 0;

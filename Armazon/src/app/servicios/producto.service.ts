@@ -1,57 +1,49 @@
-import { Injectable } from '@angular/core';
-import { ProductoDTO } from '../modelo/producto-dto';
-import { PublicacionProductoDTO } from '../modelo/publicacion-producto-dto';
-import { ComentarioDTO } from '../modelo/comentario-dto';
-
-@Injectable({
-  providedIn: 'root'
-})
+//import { ProductoGetDTO } from '../modelo/producto-get-dto';
+import { ComentarioGetDTO } from '../modelo/comentario-get-dto';
+import { ProductoGetDTO } from '../modelo/producto-get-dto';
+import { PublicacionProductoGetDTO } from '../modelo/publicacion-producto-get-dto';
 
 export class ProductoService {
-
-  // Lista de productos y publicaciones
-
-  private productoDTO1: ProductoDTO = new ProductoDTO(
-    'nombre',
-    ['imagen1'],
-    ['categoria1'],
-    ['ciudad1']
-  );
-
-  private productoDTO2: ProductoDTO = new ProductoDTO(
-    'nombre',
-    ['imagen2'],
-    ['categoria'],
-    ['ciudad2']
-  );
-
-  private productoDTO3: ProductoDTO = new ProductoDTO(
-    'nombre',
-    ['imagen3'],
-    ['categoria3'],
-    ['ciudad3']
-  );
-
-  comentarioDTO: ComentarioDTO[] = [
-    {
-      texto: "",
-      estrellas: 0,
-      codigoUsuario: 0,
-      codigoPublicacionProducto: 0
-    }
-  ];
-
-  private productos: PublicacionProductoDTO[] = [
-    { precio: 1, unidades: 1, descripcion: 'Descripción del producto 1', codigoVendedor: 1, codigoProducto: 1, productoDTO: this.productoDTO1, comentarioDTO: this.comentarioDTO},
-    { precio: 1, unidades: 1, descripcion: 'Descripción del producto 1', codigoVendedor: 1, codigoProducto: 1, productoDTO: this.productoDTO1, comentarioDTO: this.comentarioDTO}, 
-    { precio: 1, unidades: 1, descripcion: 'Descripción del producto 1', codigoVendedor: 1, codigoProducto: 1, productoDTO: this.productoDTO1, comentarioDTO: this.comentarioDTO}
-  ]
-
-  constructor() { }
-
-  // Retorna el producto correspondiente al código especificado
-  obtener(codigoProducto: number): PublicacionProductoDTO | undefined {
-    return this.productos.find(p => p.codigoProducto === codigoProducto);
+  productos: PublicacionProductoGetDTO[];
+  constructor() {
+    this.productos = [];
+    this.productos.push(
+      new PublicacionProductoGetDTO(
+        500000,
+        20,
+        'alguna descripcion',
+        1,
+        1,
+        new ProductoGetDTO(
+          1,
+          'Televisor LG 4K',
+          ['https://picsum.photos/450/225', 'https://picsum.photos/450/225'],
+          ['TECNOLOGIA'],
+          ['ARMENIA']
+        ),
+        new ComentarioGetDTO('algun texto', 0, 0, 0)
+      )
+    );
+    this.productos.push(
+      new PublicacionProductoGetDTO(
+        500000,
+        20,
+        'alguna descripcion',
+        1,
+        1,
+        new ProductoGetDTO(
+          2,
+          'Tenis Nike',
+          ['https://picsum.photos/450/225'],
+          ['ROPA', 'DEPORTE'],
+          ['BOGOTA']
+        ),
+        new ComentarioGetDTO('algun texto', 0, 0, 0)
+      )
+    );
+    //CREE OTROS PRODUCTOS (AL MENOS 6 MÁS)
   }
-
+  public listar(): PublicacionProductoGetDTO[] {
+    return this.productos;
+  }
 }

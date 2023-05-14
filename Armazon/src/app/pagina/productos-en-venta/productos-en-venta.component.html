@@ -1,1 +1,25 @@
-<p>productos-en-venta works!</p>
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <div *ngFor="let producto of productos.slice(0, productos.length/2)">
+          <h2>{{producto.productoGetDTO.nombre}}</h2>
+          <img [src]="producto.productoGetDTO.imagenes[0]" alt="{{producto.productoGetDTO.nombre}}">
+          <p>{{producto.descripcion}}</p>
+          <p>{{producto.precio}}</p>
+          <p>{{producto.productoGetDTO.categorias.join(", ")}}</p>
+          <p>{{producto.productoGetDTO.ciudades.join(", ")}}</p>
+        </div>
+      </div>
+      <div class="col">
+        <div *ngFor="let producto of productos.slice(productos.length/2)">
+          <h2>{{producto.productoGetDTO.nombre}}</h2>
+          <img [src]="producto.productoGetDTO.imagenes[0]" alt="{{producto.productoGetDTO.nombre}}">
+          <p>{{producto.descripcion}}</p>
+          <p>{{producto.precio}}</p>
+          <p>{{producto.productoGetDTO.categorias.join(", ")}}</p>
+          <p>{{producto.productoGetDTO.ciudades.join(", ")}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -24,7 +24,7 @@ export class CarritoComponent {
       for (let cod of listaCodigos) {
         const producto = this.productoService.obtener(cod);
         if (producto != null) {
-          this.productos.push(new DetalleCompraDTO(0, new PublicacionProductoDTO(0,0,"",0,0, new ProductoDTO("",[],[],[]), new ComentarioDTO("",0,0,0))));
+          this.productos.push(new DetalleCompraDTO(1, producto));
           this.valorTotal += producto.precio;
         }
       }

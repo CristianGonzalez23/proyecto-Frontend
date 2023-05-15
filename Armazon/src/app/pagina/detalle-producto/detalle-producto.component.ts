@@ -5,6 +5,7 @@ import { DetalleCompraDTO } from 'src/app/modelo/detalle-compra-dto';
 import { PublicacionProductoDTO } from 'src/app/modelo/publicacion-producto-dto';
 import { ProductoDTO } from 'src/app/modelo/producto-dto';
 import { ComentarioDTO } from 'src/app/modelo/comentario-dto';
+import { ProductoService } from 'src/app/servicios/producto.service';
 
 @Component({
   selector: 'app-detalle-producto',
@@ -14,12 +15,17 @@ import { ComentarioDTO } from 'src/app/modelo/comentario-dto';
 export class DetalleProductoComponent implements OnInit {
 
   codigoProducto: number = 0;
-  detalleCompra: DetalleCompraDTO = new DetalleCompraDTO(1, new PublicacionProductoDTO(0,0,"",0,0, new ProductoDTO("",[],[],[]), new ComentarioDTO("",0,0,0)));
+  detalleCompra!: DetalleCompraDTO;
 
   constructor(
     private route: ActivatedRoute,
-    private carritoService: CarritoService
-  ) { }
+    private carritoService: CarritoService,
+    private productoService:ProductoService
+  ) { 
+
+      this.codigoProducto = productoService.obtener(1).codigoProducto;
+
+  }
 
   ngOnInit(): void {
     const codigo = this.route.snapshot.paramMap.get('codigo');

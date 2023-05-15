@@ -7,6 +7,7 @@ export class ProductoGetDTO {
 
 
     constructor(codigo: number, nombre: string, imagen: string[], categoria: string[], ciudad: string[]) {
+      this.codigo = codigo;
         this.nombre = nombre;
         this.imagen = imagen;
         this.categoria = categoria;

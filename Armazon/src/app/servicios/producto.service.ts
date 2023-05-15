@@ -1,8 +1,12 @@
 //import { ProductoGetDTO } from '../modelo/producto-get-dto';
+import { Injectable } from '@angular/core';
 import { ComentarioGetDTO } from '../modelo/comentario-get-dto';
 import { ProductoGetDTO } from '../modelo/producto-get-dto';
 import { PublicacionProductoGetDTO } from '../modelo/publicacion-producto-get-dto';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class ProductoService {
   productos: PublicacionProductoGetDTO[];
   constructor() {
@@ -147,11 +151,12 @@ export class ProductoService {
   public listar(): PublicacionProductoGetDTO[] {
     return this.productos;
   }
-  //FALTA CORREGIR EL METODO, SOLO LO CREE PARA ELIMINAR EL ERROR
+
   public obtener(codigo: number): PublicacionProductoGetDTO {
     // Busca la publicación correspondiente al código dado
+    
     const publicacion = this.productos.find(
-      (p) => p.productoGetDTO.codigo === codigo
+      (p) => p.productoGetDTO.codigo == codigo
     );
     // Lanza un error si no se encuentra la publicación
     if (!publicacion) {

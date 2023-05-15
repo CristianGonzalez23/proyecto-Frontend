@@ -13,11 +13,11 @@ const routes: Routes = [
 { path: "login", component: LoginComponent },
 { path: "registro", component: RegistroComponent },
 { path: "publicacionProducto", component: CreacionProductoComponent},
-{ path: "**", pathMatch: "full", redirectTo: "" },
 { path: "busqueda/:texto", component: BusquedaComponent },
-{ path: "detalleProducto", component: DetalleProductoComponent},
+{ path: "detalle-producto/:codigo", component: DetalleProductoComponent},
 { path: "carrito", component: CarritoComponent},
-{ path: "productos", component: ProductosComponent}
+{ path: "productos", component: ProductosComponent},
+{ path: "**", pathMatch: "full", redirectTo: "" }
 ];
 @NgModule({
 imports: [RouterModule.forRoot(routes)],

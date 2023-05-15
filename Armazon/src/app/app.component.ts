@@ -8,7 +8,11 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'Armazon';
-  private router: Router = new Router;
+
+  constructor(private router:Router){
+    
+  }
+
   public iraBusqueda(valor: string) {
     if (valor) {
       this.router.navigate(['/busqueda', valor]);

@@ -16,14 +16,18 @@ export class BusquedaComponent {
   filtro: PublicacionProductoGetDTO[];
   constructor(private route: ActivatedRoute,private productoServicio:ProductoService) {
     this.textoBusqueda = '';
+    
+    this.productos = this.productoServicio.listar();
+    this.filtro = [];
+
+
     this.route.params.subscribe(params => {
       this.textoBusqueda = params["texto"];
       this.filtro = this.productos.filter( p =>
       p.productoGetDTO.nombre.toLowerCase().includes(this.textoBusqueda.toLowerCase()) );
       });
       //jmmm ta raro
-    this.productos = this.productoServicio.listar();
-    this.filtro = [];
+
   }
 
 }

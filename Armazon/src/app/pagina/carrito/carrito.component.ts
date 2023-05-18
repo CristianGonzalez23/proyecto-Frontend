@@ -30,4 +30,44 @@ export class CarritoComponent {
       }
     }
   }
+
+  calcularValor(precio: number, unidades: number): number {
+    return precio * unidades;
+  }
+
+  eliminarProducto(item: DetalleCompraDTO): void {
+    const index = this.productos.indexOf(item);
+    if (index !== -1) {
+      this.productos.splice(index, 1);
+      this.valorTotal -= this.calcularValor(
+        item.publicacionProducto.precio,
+        item.unidades
+      );
+    }
+  }
+
+  calcularValorTotal(): number {
+    let total = 0;
+
+    for (let item of this.productos) {
+      total += item.publicacionProducto.precio * item.unidades;
+    }
+
+    this.valorTotal = total;
+
+    return total;
+  }
+
+  incrementarUnidades(item: any): void {
+    item.unidades++;
+
+    this.calcularValorTotal();
+  }
+
+  decrementarUnidades(item: any): void {
+    if (item.unidades > 1) {
+      item.unidades--;
+      this.calcularValorTotal();
+    }
+  }
 }

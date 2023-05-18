@@ -8,6 +8,9 @@ import { PublicacionProductoGetDTO } from '../modelo/publicacion-producto-get-dt
   providedIn: 'root'
 })
 export class ProductoService {
+  private publiUrl = 'http://localhost:8081/api/publicacionProducto';
+
+
   productos: PublicacionProductoGetDTO[];
   constructor() {
     this.productos = [];

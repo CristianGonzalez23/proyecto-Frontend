@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +13,7 @@ import { ProductoComponent } from './pagina/producto/producto.component';
 import { DetalleProductoComponent } from './pagina/detalle-producto/detalle-producto.component';
 import { CarritoComponent } from './pagina/carrito/carrito.component';
 import { BusquedaComponent } from './pagina/busqueda/busqueda.component';
-
+import { AlertaComponent } from './pagina/alerta/alerta.component';
 
 
 
@@ -28,9 +29,11 @@ import { BusquedaComponent } from './pagina/busqueda/busqueda.component';
     ProductoComponent,
     DetalleProductoComponent,
     CarritoComponent,
-    BusquedaComponent
+    BusquedaComponent,
+    AlertaComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule

@@ -1,5 +1,13 @@
 export class MensajeDTO {
-    asestado: any = "";
-    error: boolean = false;
-    respuesta: any = "";
+    estado!:number;
+    error!:boolean;
+    respuesta:any;
+
+    /*
+  constructor( estado:number,error:boolean,respuesta:any) {
+
+    this.estado= estado;
+    this.error=error;
+    this.respuesta=respuesta;
+  }*/
 }

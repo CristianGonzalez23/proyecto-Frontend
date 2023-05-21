@@ -14,6 +14,7 @@ import { DetalleProductoComponent } from './pagina/detalle-producto/detalle-prod
 import { CarritoComponent } from './pagina/carrito/carrito.component';
 import { BusquedaComponent } from './pagina/busqueda/busqueda.component';
 import { AlertaComponent } from './pagina/alerta/alerta.component';
+import { GestionProductosComponent } from './pagina/gestion-productos/gestion-productos.component';
 
 
 
@@ -30,7 +31,8 @@ import { AlertaComponent } from './pagina/alerta/alerta.component';
     DetalleProductoComponent,
     CarritoComponent,
     BusquedaComponent,
-    AlertaComponent
+    AlertaComponent,
+    GestionProductosComponent
   ],
   imports: [
     HttpClientModule,

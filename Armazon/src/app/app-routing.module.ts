@@ -8,6 +8,7 @@ import { BusquedaComponent } from './pagina/busqueda/busqueda.component';
 import { DetalleProductoComponent } from './pagina/detalle-producto/detalle-producto.component';
 import { CarritoComponent } from './pagina/carrito/carrito.component';
 import { ProductosComponent } from './pagina/productos-en-venta/productos-en-venta.component';
+import { GestionProductosComponent } from './pagina/gestion-productos/gestion-productos.component';
 const routes: Routes = [
 { path: "", component: InicioComponent },
 { path: "login", component: LoginComponent },
@@ -17,6 +18,8 @@ const routes: Routes = [
 { path: "detalle-producto/:codigo", component: DetalleProductoComponent},
 { path: "carrito", component: CarritoComponent},
 { path: "productos", component: ProductosComponent},
+{ path: "gestionProducto", component: GestionProductosComponent},
+{ path: "editar-producto/:codigo", component: CreacionProductoComponent },
 { path: "**", pathMatch: "full", redirectTo: "" }
 ];
 @NgModule({

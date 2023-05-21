@@ -23,7 +23,7 @@
         <label>Categoría: </label>
         <select name="categoria" [(ngModel)]="categoriaSeleccionada" required>
             <option value="" selected>Seleccione una categoría</option>
-            <option [value]="item" *ngFor="let item of categorias">{{item}}</option>
+            <option *ngFor="let item of categorias" [value]="item">{{item}}</option>
         </select>
         <button type="button" (click)="agregarCategoria()">Agregar categoría</button>
         <ul>
@@ -45,5 +45,7 @@
             </li>
         </ul>
     </div>
-    <button type="submit" [disabled]="f.invalid">Crear nuevo producto</button>
+    <button type="submit" [disabled]="f.invalid" class="btn btn-primary"><i class="fa-solid
+        {{esEdicion ? 'fa-pencil' : 'fa-circle-plus'}} me-1"></i>{{ esEdicion ? 'Editar' : 'Crear' }}
+        Producto</button>
 </form>

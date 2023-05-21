@@ -1,18 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ComentarioGetDTO } from 'src/app/modelo/comentario-get-dto';
 import { ProductoGetDTO } from 'src/app/modelo/producto-get-dto';
 import { PublicacionProductoDTO } from 'src/app/modelo/publicacion-producto-dto';
+import { ProductoService } from 'src/app/servicios/producto.service';
 
 @Component({
   selector: 'app-creacion-producto',
   templateUrl: './creacion-producto.component.html',
   styleUrls: ['./creacion-producto.component.css'],
 })
-export class CreacionProductoComponent {
+export class CreacionProductoComponent implements OnInit {
   archivos!: FileList;
-
   producto: PublicacionProductoDTO;
-  constructor() {
+  esEdicion: boolean = false;
+  codigoProducto: number;
+  
+  categorias: string[] = [];
+  categoriasSeleccionadas: string[] = [];
+  categoriaSeleccionada: string | null = null;
+  
+  ciudades: string[] = [];
+  ciudadesSeleccionadas: string[] = [];
+  ciudadSeleccionada: string | null = null;
+  
+  constructor(private route: ActivatedRoute, private productoService: ProductoService) {
+    this.codigoProducto = this.route.snapshot.params['codigo'];
     this.producto = new PublicacionProductoDTO(
       500000,
       20,
@@ -26,16 +39,37 @@ export class CreacionProductoComponent {
         ['TECNOLOGIA'],
         ['ARMENIA']
       ),
-      new ComentarioGetDTO('algun texto', 0, 0, 0));
-    this.categorias = [];
-    this.ciudades = [];
+      new ComentarioGetDTO('algun texto', 0, 0, 0)
+    );
   }
 
-  //MENU DE CATEGORIAS
-  categorias: string[] = [];
-  categoriasSeleccionadas: string[] = [];
-  categoriaSeleccionada: string | null = null;
-
+  ngOnInit(): void {
+    this.obtenerCiudades();
+    this.obtenerCat();
+    
+    this.route.params.subscribe((params) => {
+      this.codigoProducto = params["codigo"];
+      let objetoProducto = this.productoService.obtener(this.codigoProducto);
+      if (objetoProducto != null) {
+        this.producto.codigoProducto = objetoProducto.codigoProducto;
+        this.producto.codigoVendedor = objetoProducto.codigoVendedor;
+        this.producto.comentarioDTO = objetoProducto.comentarioGetDTO;
+        this.producto.descripcion = objetoProducto.descripcion;
+        this.producto.precio = objetoProducto.precio;
+        this.producto.productoDTO = objetoProducto.productoGetDTO;
+        this.producto.unidades = objetoProducto.unidades;
+  
+        // Cargar las categorías seleccionadas desde el objeto ProductoGetDTO
+        this.categoriasSeleccionadas = [...this.producto.productoDTO.categoria];
+  
+        // Cargar las ciudades seleccionadas desde el objeto ProductoGetDTO
+        this.ciudadesSeleccionadas = [...this.producto.productoDTO.ciudad];
+  
+        this.esEdicion = true;
+      }
+    });
+  }
+  
   obtenerCat(): void {
     this.categorias.push('Tecnología');
     this.categorias.push('Hogar');
@@ -43,17 +77,7 @@ export class CreacionProductoComponent {
     this.categorias.push('Moda');
     this.categorias.push('Mascotas');
   }
-
-  //MENU DE CIUDADES
-  ciudades: string[] = [];
-  ciudadesSeleccionadas: string[] = [];
-  ciudadSeleccionada: string | null = null;
-
-  ngOnInit(): void {
-    this.obtenerCiudades();
-    this.obtenerCat();
-  }
-
+  
   obtenerCiudades(): void {
     this.ciudades.push('Bogota');
     this.ciudades.push('Medellin');
@@ -123,7 +147,12 @@ export class CreacionProductoComponent {
 
   public crearProducto() {
     if (this.archivos != null && this.archivos.length > 0) {
-      console.log(this.producto);
+      if (this.esEdicion) {
+        // Esto actualizará el producto mandando los parámetros necesarios
+        console.log(this.producto);
+      } else {
+        console.log(this.producto);
+      }
     } else {
       console.log('Debe seleccionar al menos una imagen');
     }

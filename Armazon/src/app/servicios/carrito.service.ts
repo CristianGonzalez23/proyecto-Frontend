@@ -16,7 +16,9 @@ export class CarritoService {
 
   public agregar(codigo: number){
 
-    this.productos.push(codigo);
+    if (!this.productoYaAgregado(codigo)) {
+      this.productos.push(codigo);
+    }
 
   }
 
@@ -31,6 +33,10 @@ export class CarritoService {
 
     return this.productos;
 
+  }
+
+  private productoYaAgregado(codigo: number): boolean {
+    return this.productos.includes(codigo);
   }
 
 }

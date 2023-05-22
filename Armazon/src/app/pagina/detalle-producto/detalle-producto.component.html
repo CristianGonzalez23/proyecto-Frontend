@@ -1,13 +1,73 @@
-
-<div id="liveAlertPlaceholder"></div>
-<button type="button" class="btn btn-primary" id="liveAlertBtn">Show live alert</button>
-
-
-
-<button (click)="agregarCarrito()" class="btn btn-outline-primary" ><i class="fa-solid
-    fa-cart-plus me-2"></i>Agregar al carrito</button>
-   
-<button (click)="quitarCarrito()" class="btn btn-outline-primary" ><i class="fa-solid
-    fa-cart-plus me-2"></i>Quitar del carrito</button>
-
-    
+<div *ngIf="publicacion" class="row">
+    <div class="col-md-4">
+      <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <ng-container *ngFor="let imagen of publicacion.productoGetDTO.imagen; let i = index">
+            <div class="carousel-item" [class.active]="i === 0">
+              <img [src]="imagen" class="d-block w-100" alt="Imagen del producto">
+            </div>
+          </ng-container>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
+      </div>
+      <div class="description mt-4">
+        <h4>Descripción:</h4>
+        <button (click)="toggleFavorite()" class="btn btn-outline-danger favorite-btn">
+          <span *ngIf="isFavorite">
+            <i class="bi bi-heart-fill"></i>
+            Favorito
+          </span>
+          <span *ngIf="!isFavorite">
+            <i class="bi bi-heart"></i>
+            No Favorito
+          </span>
+        </button>
+        <p>{{ publicacion.descripcion }}</p>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <h3>{{ publicacion.productoGetDTO.nombre }}</h3>
+      <p><strong>Precio:</strong> {{ publicacion.precio }}</p>
+      <p><strong>Unidades:</strong> {{ publicacion.unidades }}</p>
+      <p><strong>Categorías:</strong></p>
+      <ul>
+        <li *ngFor="let categoria of publicacion.productoGetDTO.categoria">{{ categoria }}</li>
+      </ul>
+      <p><strong>Ciudades:</strong></p>
+      <ul>
+        <li *ngFor="let ciudad of publicacion.productoGetDTO.ciudad">{{ ciudad }}</li>
+      </ul>
+      <h4>Comentarios:</h4>
+      <div class="comment card">
+        <div class="card-body">
+          <p class="comment-text"><strong>Texto:</strong> {{ publicacion.comentarioGetDTO.texto }}</p>
+          <div class="comment-valoracion">
+            <strong>Valoración:</strong>
+            <div class="rating">
+              <span [class]="getStarClass(1)"></span>
+              <span [class]="getStarClass(2)"></span>
+              <span [class]="getStarClass(3)"></span>
+              <span [class]="getStarClass(4)"></span>
+              <span [class]="getStarClass(5)"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button (click)="agregarCarrito()" class="btn btn-outline-primary">
+    <i class="fa-solid fa-cart-plus me-2"></i>Agregar al carrito
+  </button>
+  
+  <button (click)="quitarCarrito()" class="btn btn-outline-primary">
+    <i class="fa-solid fa-cart-plus me-2"></i>Quitar del carrito
+  </button>
+  

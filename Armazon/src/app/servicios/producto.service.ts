@@ -28,7 +28,7 @@ export class ProductoService {
           ['TECNOLOGIA'],
           ['ARMENIA']
         ),
-        new ComentarioGetDTO('algun texto', 0, 0, 0)
+        new ComentarioGetDTO('algun texto', 3, 0, 0)
       )
     );
     this.productos.push(

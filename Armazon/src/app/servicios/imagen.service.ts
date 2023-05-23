@@ -12,6 +12,6 @@ export class ImagenService {
     return this.http.post<MensajeDTO>(`${this.imgURL}/upload`, imagen);
   }
   public eliminar(id: string): Observable<MensajeDTO> {
-    return this.http.delete<MensajeDTO>(`${this.imgURL}/${id}`);
+    return this.http.delete<MensajeDTO>(`${this.imgURL}/eliminar/${id}`);
   }
 }

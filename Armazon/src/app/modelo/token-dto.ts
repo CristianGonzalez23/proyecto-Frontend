@@ -1,7 +1,9 @@
 export class TokenDTO {
-    token: string = "";
+  token: string = '';
+  refresh: string = '';
 
-    constructor(token:string){
-        this.token = token;
-    }
+  constructor(token: string, refresh: string) {
+    this.token = token;
+    this.refresh = refresh;
+  }
 }

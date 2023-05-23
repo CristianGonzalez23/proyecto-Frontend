@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ComentarioGetDTO } from 'src/app/modelo/comentario-get-dto';
 import { ProductoGetDTO } from 'src/app/modelo/producto-get-dto';
 import { PublicacionProductoDTO } from 'src/app/modelo/publicacion-producto-dto';
+import { CategoriaService } from 'src/app/servicios/categoria.service';
+import { ImagenService } from 'src/app/servicios/imagen.service';
 import { ProductoService } from 'src/app/servicios/producto.service';
 
 @Component({
@@ -15,16 +17,21 @@ export class CreacionProductoComponent implements OnInit {
   producto: PublicacionProductoDTO;
   esEdicion: boolean = false;
   codigoProducto: number;
-  
+
   categorias: string[] = [];
   categoriasSeleccionadas: string[] = [];
   categoriaSeleccionada: string | null = null;
-  
+
   ciudades: string[] = [];
   ciudadesSeleccionadas: string[] = [];
   ciudadSeleccionada: string | null = null;
-  
-  constructor(private route: ActivatedRoute, private productoService: ProductoService) {
+
+  constructor(
+    private route: ActivatedRoute,
+    private productoService: ProductoService,
+    private imagenService: ImagenService,
+    private categoriaService: CategoriaService
+  ) {
     this.codigoProducto = this.route.snapshot.params['codigo'];
     this.producto = new PublicacionProductoDTO(
       500000,
@@ -46,9 +53,9 @@ export class CreacionProductoComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerCiudades();
     this.obtenerCat();
-    
+
     this.route.params.subscribe((params) => {
-      this.codigoProducto = params["codigo"];
+      this.codigoProducto = params['codigo'];
       let objetoProducto = this.productoService.obtener(this.codigoProducto);
       if (objetoProducto != null) {
         this.producto.codigoProducto = objetoProducto.codigoProducto;
@@ -58,26 +65,35 @@ export class CreacionProductoComponent implements OnInit {
         this.producto.precio = objetoProducto.precio;
         this.producto.productoDTO = objetoProducto.productoGetDTO;
         this.producto.unidades = objetoProducto.unidades;
-  
+
         // Cargar las categorías seleccionadas desde el objeto ProductoGetDTO
         this.categoriasSeleccionadas = [...this.producto.productoDTO.categoria];
-  
+
         // Cargar las ciudades seleccionadas desde el objeto ProductoGetDTO
         this.ciudadesSeleccionadas = [...this.producto.productoDTO.ciudad];
-  
+
         this.esEdicion = true;
       }
     });
   }
-  
+
   obtenerCat(): void {
+    /*
     this.categorias.push('Tecnología');
     this.categorias.push('Hogar');
     this.categorias.push('Deportes');
     this.categorias.push('Moda');
-    this.categorias.push('Mascotas');
+    this.categorias.push('Mascotas');*/
+    this.categoriaService.listar().subscribe({
+      next: (data) => {
+        this.categorias = data.respuesta;
+      },
+      error: (error) => {
+        console.log(error.error);
+      },
+    });
   }
-  
+
   obtenerCiudades(): void {
     this.ciudades.push('Bogota');
     this.ciudades.push('Medellin');
@@ -146,15 +162,39 @@ export class CreacionProductoComponent implements OnInit {
   }
 
   public crearProducto() {
-    if (this.archivos != null && this.archivos.length > 0) {
-      if (this.esEdicion) {
-        // Esto actualizará el producto mandando los parámetros necesarios
-        console.log(this.producto);
-      } else {
-        console.log(this.producto);
-      }
+    if (this.producto.imagenes.length > 0) {
+      this.productoService.crearPublicacionProducto(this.producto).subscribe({
+        next: (data) => {
+          console.log(data.respuesta);
+        },
+        error: (error) => {
+          console.log(error.error);
+        },
+      });
     } else {
-      console.log('Debe seleccionar al menos una imagen');
+      console.log('Debe seleccionar al menos una imagen y subirla');
+    }
+  }
+
+  public subirImagenes() {
+    if (this.archivos != null && this.archivos.length > 0) {
+      const objeto = this.producto;
+      const formData = new FormData();
+
+      for (let i = 0; i < this.archivos.length; i++) {
+        formData.append('files', this.archivos[i]);
+      }
+
+      this.imagenService.subir(formData).subscribe({
+        next: (data) => {
+          // Aquí puedes manejar la respuesta del backend si es necesario
+        },
+        error: (error) => {
+          console.log(error.error);
+        },
+      });
+    } else {
+      console.log('Debe seleccionar al menos una imagen y subirla');
     }
   }
 }

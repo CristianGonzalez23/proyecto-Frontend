@@ -7,7 +7,7 @@ import { MensajeDTO } from '../modelo/mensaje-dto';
   providedIn: 'root',
 })
 export class UsuarioService {
-  private userUrl = 'http://localhost:8081/api/usuarios';
+  private userUrl = 'http://localhost:8081/api/usuario';
   constructor(private http: HttpClient) {}
 
   public obtener(codigo: number): Observable<MensajeDTO> {
@@ -17,11 +17,14 @@ export class UsuarioService {
   public eliminar(codigo: number): Observable<MensajeDTO> {
     return this.http.delete<MensajeDTO>(`${this.userUrl}/eliminar/${codigo}`);
   }
-  
+
   public actualizar(
     codigo: number,
     usuario: UsuarioDTO
   ): Observable<MensajeDTO> {
-    return this.http.put<MensajeDTO>(`${this.userUrl}/actualizar/${codigo}`, usuario);
+    return this.http.put<MensajeDTO>(
+      `${this.userUrl}/actualizar/${codigo}`,
+      usuario
+    );
   }
 }

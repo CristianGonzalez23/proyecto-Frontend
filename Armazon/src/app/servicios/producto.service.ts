@@ -1,18 +1,21 @@
 //import { ProductoGetDTO } from '../modelo/producto-get-dto';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { ComentarioGetDTO } from '../modelo/comentario-get-dto';
 import { ProductoGetDTO } from '../modelo/producto-get-dto';
 import { PublicacionProductoGetDTO } from '../modelo/publicacion-producto-get-dto';
+import { MensajeDTO } from '../modelo/mensaje-dto';
+import { PublicacionProductoDTO } from '../modelo/publicacion-producto-dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductoService {
   private publiUrl = 'http://localhost:8081/api/publicacionProducto';
 
-
   productos: PublicacionProductoGetDTO[];
-  constructor() {
+  constructor(private http: HttpClient) {
     this.productos = [];
     this.productos.push(
       new PublicacionProductoGetDTO(
@@ -157,7 +160,7 @@ export class ProductoService {
 
   public obtener(codigo: number): PublicacionProductoGetDTO {
     // Busca la publicación correspondiente al código dado
-    
+
     const publicacion = this.productos.find(
       (p) => p.productoGetDTO.codigo == codigo
     );
@@ -167,8 +170,32 @@ export class ProductoService {
         `No se encontró una publicación con el código ${codigo}.`
       );
     }
-
     // Devuelve la publicación encontrada
     return publicacion;
+  }
+
+  public crearPublicacionProducto(
+    publicacion: PublicacionProductoDTO
+  ): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.publiUrl}/crear/`, publicacion);
+  }
+
+  public obtenerpublicacion(codigo: number): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(
+      `${this.publiUrl}/obtenerByCodigo/${codigo}`
+    );
+  }
+
+  public eliminar(codigo: number): Observable<MensajeDTO> {
+    return this.http.delete<MensajeDTO>(
+      `${this.publiUrl}/eliminarAll/${codigo}`
+    );
+  }
+
+  public actualizar(codigo: number, unidades: number): Observable<MensajeDTO> {
+    return this.http.put<MensajeDTO>(
+      `${this.publiUrl}/actualizar/${unidades}`,
+      codigo
+    );
   }
 }

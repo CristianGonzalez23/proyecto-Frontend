@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,8 @@ import { CarritoComponent } from './pagina/carrito/carrito.component';
 import { BusquedaComponent } from './pagina/busqueda/busqueda.component';
 import { AlertaComponent } from './pagina/alerta/alerta.component';
 import { GestionProductosComponent } from './pagina/gestion-productos/gestion-productos.component';
+import { RevisarProductosComponent } from './pagina/revisar-productos/revisar-productos.component';
+import { UsuarioInterceptor } from './interceptor/usuario.interceptor';
 
 
 
@@ -32,7 +34,8 @@ import { GestionProductosComponent } from './pagina/gestion-productos/gestion-pr
     CarritoComponent,
     BusquedaComponent,
     AlertaComponent,
-    GestionProductosComponent
+    GestionProductosComponent,
+    RevisarProductosComponent
   ],
   imports: [
     HttpClientModule,
@@ -40,7 +43,7 @@ import { GestionProductosComponent } from './pagina/gestion-productos/gestion-pr
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ { provide: HTTP_INTERCEPTORS, useClass: UsuarioInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

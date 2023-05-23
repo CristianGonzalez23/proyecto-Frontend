@@ -9,6 +9,11 @@ import { DetalleProductoComponent } from './pagina/detalle-producto/detalle-prod
 import { CarritoComponent } from './pagina/carrito/carrito.component';
 import { ProductosComponent } from './pagina/productos-en-venta/productos-en-venta.component';
 import { GestionProductosComponent } from './pagina/gestion-productos/gestion-productos.component';
+import { LoginGuard } from './guards/permiso.service';
+import { RolesGuard } from './guards/roles.service';
+import { RevisarProductosComponent } from './pagina/revisar-productos/revisar-productos.component';
+
+
 const routes: Routes = [
 { path: "", component: InicioComponent },
 { path: "login", component: LoginComponent },
@@ -20,7 +25,22 @@ const routes: Routes = [
 { path: "productos", component: ProductosComponent},
 { path: "gestionProducto", component: GestionProductosComponent},
 { path: "editar-producto/:codigo", component: CreacionProductoComponent },
-{ path: "**", pathMatch: "full", redirectTo: "" }
+{ path: "**", pathMatch: "full", redirectTo: "" },
+{ path: "login", component: LoginComponent, canActivate: [LoginGuard] },
+{ path: "registro", component: RegistroComponent, canActivate: [LoginGuard] },
+
+
+{ path: "crear-producto", component: CreacionProductoComponent, canActivate: [RolesGuard], data: {
+    expectedRole: ["CLIENTE"] } },
+{ path: "editar-producto/:codigo", component: CreacionProductoComponent, canActivate:
+    [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
+{ path: "gestionar-productos", component: GestionProductosComponent, canActivate:
+    [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
+
+{ path: "revisar-productos", component: RevisarProductosComponent, canActivate: [RolesGuard],
+    data: { expectedRole: ["MODERADOR"] } },
+
+
 ];
 @NgModule({
 imports: [RouterModule.forRoot(routes)],

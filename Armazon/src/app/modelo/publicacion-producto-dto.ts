@@ -8,6 +8,7 @@ export class PublicacionProductoDTO {
   descripcion: string = '';
   codigoVendedor: number = 0;
   codigoProducto: number = 0;
+  imagenes: any;//mirar
 
   productoDTO: ProductoDTO = new ProductoDTO(
     'nombre1',

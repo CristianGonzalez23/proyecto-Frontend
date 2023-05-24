@@ -43,13 +43,13 @@ export class TokenService {
 
   public login(token: string) {
     this.setToken(token);
-    this.sesionService.updateSession(true);
+  //  this.sesionService.updateSession(true);
     this.router.navigate(['/']);
   }
 
   public logout() {
     window.sessionStorage.clear();
-    this.sesionService.updateSession(false);
+    //this.sesionService.updateSession(false);
     this.router.navigate(['/login']);
   }
 

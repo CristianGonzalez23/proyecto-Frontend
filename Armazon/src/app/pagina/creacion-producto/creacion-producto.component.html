@@ -1,5 +1,5 @@
 <div class="card p-5">
-    <form #f="ngForm" (ngSubmit)="crearProducto()">
+    <form #f="ngForm" (ngForm)="crearProducto()">
         <div class="mb-3">
             <label>Nombre:</label>
             <input #nombre="ngModel" class="form-control"

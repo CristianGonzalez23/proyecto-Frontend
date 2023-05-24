@@ -4,6 +4,7 @@ import { ComentarioGetDTO } from 'src/app/modelo/comentario-get-dto';
 import { ProductoGetDTO } from 'src/app/modelo/producto-get-dto';
 import { PublicacionProductoDTO } from 'src/app/modelo/publicacion-producto-dto';
 import { CategoriaService } from 'src/app/servicios/categoria.service';
+import { CiudadService } from 'src/app/servicios/ciudad.service';
 import { ImagenService } from 'src/app/servicios/imagen.service';
 import { ProductoService } from 'src/app/servicios/producto.service';
 
@@ -17,10 +18,14 @@ export class CreacionProductoComponent implements OnInit {
   producto: PublicacionProductoDTO;
   esEdicion: boolean = false;
   codigoProducto: number;
-
+  /*
   categorias: string[] = [];
   categoriasSeleccionadas: string[] = [];
   categoriaSeleccionada: string | null = null;
+*/
+  categorias: any[] = [];
+  categoriasSeleccionadas: any[] = [];
+  categoriaSeleccionada: any | null = null;
 
   ciudades: string[] = [];
   ciudadesSeleccionadas: string[] = [];
@@ -30,7 +35,8 @@ export class CreacionProductoComponent implements OnInit {
     private route: ActivatedRoute,
     private productoService: ProductoService,
     private imagenService: ImagenService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private ciudadService: CiudadService
   ) {
     this.codigoProducto = this.route.snapshot.params['codigo'];
     this.producto = new PublicacionProductoDTO(
@@ -90,11 +96,13 @@ export class CreacionProductoComponent implements OnInit {
       },
       error: (error) => {
         console.log(error.error);
+        console.log("pailas, paso algo");
       },
     });
   }
 
   obtenerCiudades(): void {
+    /*
     this.ciudades.push('Bogota');
     this.ciudades.push('Medellin');
     this.ciudades.push('Cali');
@@ -120,6 +128,15 @@ export class CreacionProductoComponent implements OnInit {
     this.ciudades.push('Florencia');
     this.ciudades.push('Yopal');
     this.ciudades.push('Mocoa');
+    */
+    this.ciudadService.listar().subscribe({
+      next: (data) => {
+        this.ciudades = data.respuesta;
+      },
+      error: (error) => {
+        console.log(error.error);
+      },
+    });
   }
 
   onFileChange(event: any) {
@@ -135,6 +152,7 @@ export class CreacionProductoComponent implements OnInit {
       !this.categoriasSeleccionadas.includes(this.categoriaSeleccionada)
     ) {
       this.categoriasSeleccionadas.push(this.categoriaSeleccionada);
+      console.log(this.categoriaSeleccionada);
     }
   }
 

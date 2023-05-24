@@ -12,7 +12,7 @@ import { PublicacionProductoDTO } from '../modelo/publicacion-producto-dto';
   providedIn: 'root',
 })
 export class ProductoService {
-  private publiUrl = 'http://localhost:8081/api/publicacionProducto';
+  private publiUrl = 'http://localhost:8081/api/publicacionproducto';
 
   productos: PublicacionProductoGetDTO[];
   constructor(private http: HttpClient) {

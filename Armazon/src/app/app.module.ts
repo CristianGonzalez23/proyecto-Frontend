@@ -17,8 +17,7 @@ import { AlertaComponent } from './pagina/alerta/alerta.component';
 import { GestionProductosComponent } from './pagina/gestion-productos/gestion-productos.component';
 import { RevisarProductosComponent } from './pagina/revisar-productos/revisar-productos.component';
 import { UsuarioInterceptor } from './interceptor/usuario.interceptor';
-
-
+import { ProductosComponent } from './pagina/productos-en-venta/productos-en-venta.component';
 
 
 @NgModule({
@@ -35,7 +34,8 @@ import { UsuarioInterceptor } from './interceptor/usuario.interceptor';
     BusquedaComponent,
     AlertaComponent,
     GestionProductosComponent,
-    RevisarProductosComponent
+    RevisarProductosComponent,
+    ProductosComponent
   ],
   imports: [
     HttpClientModule,

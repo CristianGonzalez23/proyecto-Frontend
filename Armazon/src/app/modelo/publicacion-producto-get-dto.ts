@@ -1,9 +1,10 @@
 import { ComentarioGetDTO } from './comentario-get-dto';
+import { ProductoDTO } from './producto-dto';
 import { ProductoGetDTO } from './producto-get-dto';
 
 export class PublicacionProductoGetDTO {
 
-    
+  codigo:number=0;
   precio: number = 0;
   unidades: number = 0;
   descripcion: string = '';
@@ -15,25 +16,17 @@ export class PublicacionProductoGetDTO {
     'nombre1',
     ['imagen1'],
     ['categoria1'],
-    ['ciudad1'],
-    
+    ['ciudad1']
   );
-
-  comentarioGetDTO: ComentarioGetDTO = new ComentarioGetDTO( "texto: string",
-  1,
-  1,
-  1
-);
 
   
   constructor(precio: number, unidades: number, descripcion: string, codigoVendedor: number, codigoProducto: number,
-    productoGetDTO: ProductoGetDTO, comentarioGetDTO: ComentarioGetDTO) {
+    productoDTO: ProductoGetDTO) {
    this.precio = precio;
    this.descripcion = descripcion;
    this.codigoVendedor = codigoVendedor;
    this.codigoProducto = codigoProducto;
-   this.productoGetDTO= productoGetDTO;
-   this.comentarioGetDTO= comentarioGetDTO;
+   this.productoGetDTO= productoDTO;
    
  }
 

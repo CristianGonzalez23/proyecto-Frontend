@@ -30,8 +30,7 @@ export class ProductoService {
           ['https://picsum.photos/450/225', 'https://picsum.photos/450/225'],
           ['TECNOLOGIA'],
           ['ARMENIA']
-        ),
-        new ComentarioGetDTO('algun texto', 3, 0, 0)
+        )
       )
     );
     this.productos.push(
@@ -47,8 +46,7 @@ export class ProductoService {
           ['https://picsum.photos/450/225'],
           ['ROPA', 'DEPORTE'],
           ['BOGOTA']
-        ),
-        new ComentarioGetDTO('algun texto', 0, 0, 0)
+        )
       )
     );
     this.productos.push(
@@ -64,8 +62,7 @@ export class ProductoService {
           ['https://picsum.photos/450/225'],
           ['ROPA', 'DEPORTE'],
           ['BOGOTA']
-        ),
-        new ComentarioGetDTO('algun texto', 0, 0, 0)
+        )
       )
     );
     this.productos.push(
@@ -81,8 +78,7 @@ export class ProductoService {
           ['https://picsum.photos/450/225'],
           ['ROPA', 'DEPORTE'],
           ['BOGOTA']
-        ),
-        new ComentarioGetDTO('algun texto', 0, 0, 0)
+        )
       )
     );
     this.productos.push(
@@ -98,8 +94,7 @@ export class ProductoService {
           ['https://picsum.photos/450/225'],
           ['TECNOLOGIA'],
           ['YOPAL']
-        ),
-        new ComentarioGetDTO('algun texto', 0, 0, 0)
+        )
       )
     );
     this.productos.push(
@@ -115,8 +110,7 @@ export class ProductoService {
           ['https://picsum.photos/450/225'],
           ['HOGAR'],
           ['ARMENIA']
-        ),
-        new ComentarioGetDTO('algun texto', 0, 0, 0)
+        )
       )
     );
     this.productos.push(
@@ -132,8 +126,7 @@ export class ProductoService {
           ['https://picsum.photos/450/225'],
           ['TECNOLOGIA'],
           ['BOGOTA']
-        ),
-        new ComentarioGetDTO('algun texto', 0, 0, 0)
+        )
       )
     );
     this.productos.push(
@@ -149,8 +142,7 @@ export class ProductoService {
           ['https://picsum.photos/450/225'],
           ['ROPA', 'DEPORTE'],
           ['BOGOTA']
-        ),
-        new ComentarioGetDTO('algun texto', 0, 0, 0)
+        )
       )
     );
   }

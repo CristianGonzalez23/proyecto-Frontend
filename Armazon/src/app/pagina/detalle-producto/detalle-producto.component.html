@@ -2,7 +2,7 @@
     <div class="col-md-4">
       <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-          <ng-container *ngFor="let imagen of publicacion.productoGetDTO.imagen; let i = index">
+          <ng-container *ngFor="let imagen of publicacion.productoGetDTO.imagenes; let i = index">
             <div class="carousel-item" [class.active]="i === 0">
               <img [src]="imagen" class="d-block w-100" alt="Imagen del producto">
             </div>
@@ -47,7 +47,7 @@
       <h4>Comentarios:</h4>
       <div class="comment card">
         <div class="card-body">
-          <p class="comment-text"><strong>Texto:</strong> {{ publicacion.comentarioGetDTO.texto }}</p>
+          <p class="comment-text"><strong>Texto:</strong> Comentario...</p>
           <div class="comment-valoracion">
             <strong>Valoración:</strong>
             <div class="rating">

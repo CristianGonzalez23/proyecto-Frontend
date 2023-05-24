@@ -16,8 +16,8 @@ import { RevisarProductosComponent } from './pagina/revisar-productos/revisar-pr
 
 const routes: Routes = [
 { path: "", component: InicioComponent },
-{ path: "login", component: LoginComponent },
-{ path: "registro", component: RegistroComponent },
+{ path: "login", component: LoginComponent, canActivate: [LoginGuard] },
+{ path: "registro", component: RegistroComponent, canActivate: [LoginGuard] },
 { path: "publicacionProducto", component: CreacionProductoComponent},
 { path: "busqueda/:texto", component: BusquedaComponent },
 { path: "detalle-producto/:codigo", component: DetalleProductoComponent},
@@ -25,21 +25,15 @@ const routes: Routes = [
 { path: "productos", component: ProductosComponent},
 { path: "gestionProducto", component: GestionProductosComponent},
 { path: "editar-producto/:codigo", component: CreacionProductoComponent },
-{ path: "**", pathMatch: "full", redirectTo: "" },
-{ path: "login", component: LoginComponent, canActivate: [LoginGuard] },
-{ path: "registro", component: RegistroComponent, canActivate: [LoginGuard] },
-
-
 { path: "crear-producto", component: CreacionProductoComponent, canActivate: [RolesGuard], data: {
     expectedRole: ["CLIENTE"] } },
 { path: "editar-producto/:codigo", component: CreacionProductoComponent, canActivate:
     [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
 { path: "gestionar-productos", component: GestionProductosComponent, canActivate:
     [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
-
 { path: "revisar-productos", component: RevisarProductosComponent, canActivate: [RolesGuard],
     data: { expectedRole: ["MODERADOR"] } },
-
+{ path: "**", pathMatch: "full", redirectTo: "" }
 
 ];
 @NgModule({

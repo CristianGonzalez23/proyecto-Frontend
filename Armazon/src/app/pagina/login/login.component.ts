@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SesionDTO } from 'src/app/modelo/sesion-dto';
+import { AuthService } from 'src/app/servicios/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,11 +9,18 @@ import { SesionDTO } from 'src/app/modelo/sesion-dto';
 })
 export class LoginComponent {
   sesion: SesionDTO;
-  constructor() {
+  constructor(private authService:AuthService) {
     this.sesion = new SesionDTO('', '', '');
   }
 
   public login() {
-    console.log(this.sesion);
+    this.authService.login(this.sesion).subscribe({
+      next: data =>{
+        console.log(data.respuesta);
+      },
+      error: err =>{
+
+      },
+    })
   }
 }

@@ -39,6 +39,7 @@ export class CarritoComponent {
     const index = this.productos.indexOf(item);
     if (index !== -1) {
       this.productos.splice(index, 1);
+      this.carritoService.quitar(item.publicacionProducto.codigo);
       this.valorTotal -= this.calcularValor(
         item.publicacionProducto.precio,
         item.unidades

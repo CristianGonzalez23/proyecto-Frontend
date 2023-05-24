@@ -1,13 +1,12 @@
 export class ProductoDTO {
     nombre: string = "";
-    imagen: string[] = [];
+    imagenes: string[] = [];
     categoria: string[] = [];
     ciudad: string[] = [];
 
-
-    constructor(nombre: string, imagen: string[], categoria: string[], ciudad: string[]) {
+    constructor(nombre: string, imagenes: string[], categoria: string[], ciudad: string[]) {
         this.nombre = nombre;
-        this.imagen = imagen;
+        this.imagenes = imagenes;
         this.categoria = categoria;
         this.ciudad = ciudad;
       }

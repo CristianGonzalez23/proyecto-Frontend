@@ -45,11 +45,12 @@ export class DetalleProductoComponent implements OnInit {
   }
 
   getStarClass(starNumber: number): string {
-    if (starNumber <= this.publicacion.comentarioGetDTO.estrellas) {
+    /*if (starNumber <= this.publicacion.comentarioGetDTO.estrellas) {
       return "filled-star";
     } else {
       return "empty-star";
-    }
+    }*/
+    return "";
   }
 
   toggleFavorite(): void {

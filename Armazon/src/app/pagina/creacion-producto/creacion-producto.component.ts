@@ -39,21 +39,7 @@ export class CreacionProductoComponent implements OnInit {
     private ciudadService: CiudadService
   ) {
     this.codigoProducto = this.route.snapshot.params['codigo'];
-    this.producto = new PublicacionProductoDTO(
-      500000,
-      20,
-      'alguna descripcion',
-      1,
-      1,
-      new ProductoGetDTO(
-        1,
-        'Televisor LG 4K',
-        ['https://picsum.photos/450/225', 'https://picsum.photos/450/225'],
-        ['TECNOLOGIA'],
-        ['ARMENIA']
-      ),
-      new ComentarioGetDTO('algun texto', 0, 0, 0)
-    );
+    this.producto = new PublicacionProductoDTO();
   }
 
   ngOnInit(): void {
@@ -62,23 +48,12 @@ export class CreacionProductoComponent implements OnInit {
 
     this.route.params.subscribe((params) => {
       this.codigoProducto = params['codigo'];
-      let objetoProducto = this.productoService.obtener(this.codigoProducto);
-      if (objetoProducto != null) {
-        this.producto.codigoProducto = objetoProducto.codigoProducto;
-        this.producto.codigoVendedor = objetoProducto.codigoVendedor;
-        this.producto.comentarioDTO = objetoProducto.comentarioGetDTO;
-        this.producto.descripcion = objetoProducto.descripcion;
-        this.producto.precio = objetoProducto.precio;
-        this.producto.productoDTO = objetoProducto.productoGetDTO;
-        this.producto.unidades = objetoProducto.unidades;
-
-        // Cargar las categorías seleccionadas desde el objeto ProductoGetDTO
-        this.categoriasSeleccionadas = [...this.producto.productoDTO.categoria];
-
-        // Cargar las ciudades seleccionadas desde el objeto ProductoGetDTO
-        this.ciudadesSeleccionadas = [...this.producto.productoDTO.ciudad];
-
-        this.esEdicion = true;
+      if(this.codigoProducto != null){
+        let objetoProducto = this.productoService.obtener(this.codigoProducto);
+        if (objetoProducto != null) {
+          this.producto = objetoProducto;
+          this.esEdicion = true;
+        }
       }
     });
   }
@@ -180,7 +155,7 @@ export class CreacionProductoComponent implements OnInit {
   }
 
   public crearProducto() {
-    if (this.producto.imagenes.length > 0) {
+    if (this.producto.productoGetDTO.imagenes.length > 0) {
       this.productoService.crearPublicacionProducto(this.producto).subscribe({
         next: (data) => {
           console.log(data.respuesta);

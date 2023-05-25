@@ -27,9 +27,9 @@ export class CreacionProductoComponent implements OnInit {
   categoriasSeleccionadas: any[] = [];
   categoriaSeleccionada: any | null = null;
 
-  ciudades: string[] = [];
-  ciudadesSeleccionadas: string[] = [];
-  ciudadSeleccionada: string | null = null;
+  ciudades: any[] = [];
+  ciudadesSeleccionadas: any[] = [];
+  ciudadSeleccionada: any | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,7 +48,7 @@ export class CreacionProductoComponent implements OnInit {
 
     this.route.params.subscribe((params) => {
       this.codigoProducto = params['codigo'];
-      if(this.codigoProducto != null){
+      if (this.codigoProducto != null) {
         let objetoProducto = this.productoService.obtener(this.codigoProducto);
         if (objetoProducto != null) {
           this.producto = objetoProducto;
@@ -71,7 +71,7 @@ export class CreacionProductoComponent implements OnInit {
       },
       error: (error) => {
         console.log(error.error);
-        console.log("pailas, paso algo");
+        console.log('pailas, paso algo');
       },
     });
   }
@@ -123,11 +123,13 @@ export class CreacionProductoComponent implements OnInit {
 
   agregarCategoria() {
     if (
-      this.categoriaSeleccionada &&
-      !this.categoriasSeleccionadas.includes(this.categoriaSeleccionada)
+      this.producto.productoGetDTO.categoria &&
+      !this.categoriasSeleccionadas.includes(
+        this.producto.productoGetDTO.categoria
+      )
     ) {
-      this.categoriasSeleccionadas.push(this.categoriaSeleccionada);
-      console.log(this.categoriaSeleccionada);
+      this.categoriasSeleccionadas.push(this.producto.productoGetDTO.categoria);
+      console.log(this.producto.productoGetDTO.categoria);
     }
   }
 
@@ -140,10 +142,11 @@ export class CreacionProductoComponent implements OnInit {
 
   agregarCiudad() {
     if (
-      this.ciudadSeleccionada &&
-      !this.ciudadesSeleccionadas.includes(this.ciudadSeleccionada)
+      this.producto.productoGetDTO.ciudad &&
+      !this.ciudadesSeleccionadas.includes(this.producto.productoGetDTO.ciudad)
     ) {
-      this.ciudadesSeleccionadas.push(this.ciudadSeleccionada);
+      this.ciudadesSeleccionadas.push(this.producto.productoGetDTO.ciudad);
+      console.log(this.producto.productoGetDTO.ciudad);
     }
   }
 
@@ -155,6 +158,7 @@ export class CreacionProductoComponent implements OnInit {
   }
 
   public crearProducto() {
+    console.log('funciona el emtodo');
     if (this.producto.productoGetDTO.imagenes.length > 0) {
       this.productoService.crearPublicacionProducto(this.producto).subscribe({
         next: (data) => {

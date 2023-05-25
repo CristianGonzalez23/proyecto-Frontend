@@ -1,11 +1,29 @@
-<form #f="ngForm" (ngSubmit)="login()">
-    <div>
-        <label>Email: </label>
-        <input type="email" name="email" [(ngModel)]="sesion.email" required minlength="5" maxlength="50" />
+<div class="card p-5">
+    <form #f="ngForm" (ngSubmit)="login()">
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Email:</label>
+            <div class="col-sm-10">
+                <input #email="ngModel" class="form-control"
+                    [ngClass]="email.invalid && (email.dirty || email.touched) ? 'is-invalid' : ''" type="email"
+                    name="email" [(ngModel)]="sesion.email" email required minlength="5" maxlength="50" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Contraseña:</label>
+            <div class="col-sm-10">
+                <input #password="ngModel" class="form-control"
+                    [ngClass]="password.invalid && (password.dirty || password.touched) ? 'is-invalid' : ''"
+                    type="password" name="password" [(ngModel)]="sesion.password" required minlength="2"
+                    maxlength="50" />
+            </div>
+        </div>
+        <button type="submit" [disabled]="f.invalid" class="btn btn-primary">
+            <i class="fa-solid fa-circle-plus me-1"></i>
+            Iniciar Sesion
+        </button>
+    </form>
+    <div class="text-center">
+        <a href="Armazon\src\app\pagina\registro\registro.component.html">Olvidé mi contraseña</a> | <a
+            href="Armazon\src\app\pagina\registro\registro.component.html">Crear una nueva cuenta</a>
     </div>
-    <div>
-        <label>Contraseña: </label>
-        <input type="password" name="password" [(ngModel)]="sesion.password" required minlength="2" maxlength="50" />
-    </div>
-    <button type="submit" [disabled]="f.invalid">LogIn</button>
-</form>
+</div>

@@ -12,6 +12,7 @@ import { GestionProductosComponent } from './pagina/gestion-productos/gestion-pr
 import { LoginGuard } from './guards/permiso.service';
 import { RolesGuard } from './guards/roles.service';
 import { RevisarProductosComponent } from './pagina/revisar-productos/revisar-productos.component';
+import { FavoritoComponent } from './pagina/favorito/favorito.component';
 
 
 const routes: Routes = [
@@ -22,11 +23,15 @@ const routes: Routes = [
 { path: "busqueda/:texto", component: BusquedaComponent },
 { path: "detalle-producto/:codigo", component: DetalleProductoComponent},
 { path: "carrito", component: CarritoComponent},
+{ path: "gestionar", component: GestionProductosComponent},
 { path: "productos", component: ProductosComponent},
-{ path: "gestionProducto", component: GestionProductosComponent},
-{ path: "editar-producto/:codigo", component: CreacionProductoComponent },
+{ path: "favorito/:codigo", component: FavoritoComponent},
+//{ path: "gestionProducto", component: GestionProductosComponent},
+//{ path: "editar-producto/:codigo", component: CreacionProductoComponent },
 { path: "crear-producto", component: CreacionProductoComponent, canActivate: [RolesGuard], data: {
     expectedRole: ["CLIENTE"] } },
+//{ path: "favorito/:codigo", component: FavoritoComponent, canActivate: [RolesGuard], data: {
+//    expectedRole: ["CLIENTE"] } },    
 { path: "editar-producto/:codigo", component: CreacionProductoComponent, canActivate:
     [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
 { path: "gestionar-productos", component: GestionProductosComponent, canActivate:

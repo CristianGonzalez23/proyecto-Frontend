@@ -12,9 +12,12 @@ export class AppComponent implements OnInit {
   title = 'Unimarket';
   isLogged = false;
   email: string = '';
+
   constructor(private tokenService: TokenService, private router:Router, private sesionService: SesionService) {}
  
   ngOnInit(): void {
+
+    /*
     const objeto = this;
     this.sesionService.currentMessage.subscribe({
     next: data => {
@@ -30,6 +33,16 @@ export class AppComponent implements OnInit {
     }else{
       this.email="";
     }
+    */
+
+    this.isLogged = this.tokenService.isLogged();
+
+    if(this.isLogged){
+
+      this.email = this.tokenService.getEmail();
+      
+    }
+
   }
   public logout() {
     this.tokenService.logout();

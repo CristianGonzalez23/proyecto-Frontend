@@ -15,6 +15,8 @@ export class ProductoService {
   private publiUrl = 'http://localhost:8081/api/publicacionproducto';
 
   productos: PublicacionProductoGetDTO[];
+  categoria: any;
+
   constructor(private http: HttpClient) {
     this.productos = [];
     this.productos.push(
@@ -188,6 +190,24 @@ export class ProductoService {
     return this.http.put<MensajeDTO>(
       `${this.publiUrl}/actualizar/${unidades}`,
       codigo
+    );
+  }
+
+  public listarPublicacionesCategoria(categoria: any): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(
+      `${this.publiUrl}/listarPublicacionesCategoria/${categoria}`
+    );
+  }
+  
+  public listarPublicacionesCiudad(ciudad: any): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(
+      `${this.publiUrl}/listarPublicacionesCategoria/${ciudad}`
+    );
+  }
+
+  public listarPublicacionesPrecio(precio: number): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(
+      `${this.publiUrl}/listarPublicacionesCategoria/${precio}`
     );
   }
 }

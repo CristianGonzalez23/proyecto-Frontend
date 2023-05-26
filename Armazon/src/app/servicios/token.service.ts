@@ -50,7 +50,7 @@ export class TokenService {
   public logout() {
     window.sessionStorage.clear();
     //this.sesionService.updateSession(false);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   private decodePayload(token: string): any {

@@ -59,12 +59,7 @@ export class CreacionProductoComponent implements OnInit {
   }
 
   obtenerCat(): void {
-    /*
-    this.categorias.push('Tecnología');
-    this.categorias.push('Hogar');
-    this.categorias.push('Deportes');
-    this.categorias.push('Moda');
-    this.categorias.push('Mascotas');*/
+    
     this.categoriaService.listar().subscribe({
       next: (data) => {
         this.categorias = data.respuesta;
@@ -77,33 +72,7 @@ export class CreacionProductoComponent implements OnInit {
   }
 
   obtenerCiudades(): void {
-    /*
-    this.ciudades.push('Bogota');
-    this.ciudades.push('Medellin');
-    this.ciudades.push('Cali');
-    this.ciudades.push('Barranquilla');
-    this.ciudades.push('Cartagena');
-    this.ciudades.push('Santa Marta');
-    this.ciudades.push('Bucaramanga');
-    this.ciudades.push('Manizales');
-    this.ciudades.push('Pereira');
-    this.ciudades.push('Ibague');
-    this.ciudades.push('Cucuta');
-    this.ciudades.push('Villavicencio');
-    this.ciudades.push('Pasto');
-    this.ciudades.push('Monteria');
-    this.ciudades.push('Valledupar');
-    this.ciudades.push('Armenia');
-    this.ciudades.push('Neiva');
-    this.ciudades.push('Sincelejo');
-    this.ciudades.push('Tunja');
-    this.ciudades.push('Riohacha');
-    this.ciudades.push('Popayan');
-    this.ciudades.push('Quibdo');
-    this.ciudades.push('Florencia');
-    this.ciudades.push('Yopal');
-    this.ciudades.push('Mocoa');
-    */
+    
     this.ciudadService.listar().subscribe({
       next: (data) => {
         this.ciudades = data.respuesta;

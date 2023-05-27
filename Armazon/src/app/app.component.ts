@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
  
   ngOnInit(): void {
 
-    /*
+    
     const objeto = this;
     this.sesionService.currentMessage.subscribe({
     next: data => {
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
     }else{
       this.email="";
     }
-    */
+    
 
     this.isLogged = this.tokenService.isLogged();
 
@@ -55,4 +55,10 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/busqueda', valor]);
     }
   }
+
+  isModerator(): boolean {
+    const roles = this.tokenService.getRole();
+    return roles.includes('MODERADOR');
+  }
+
 }

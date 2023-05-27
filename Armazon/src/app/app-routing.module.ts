@@ -19,11 +19,14 @@ const routes: Routes = [
 { path: "", component: InicioComponent },
 { path: "login", component: LoginComponent, canActivate: [LoginGuard] },
 { path: "registro", component: RegistroComponent, canActivate: [LoginGuard] },
-{ path: "publicacionProducto", component: CreacionProductoComponent},
+{ path: "publicacionProducto", component: CreacionProductoComponent , canActivate:
+[RolesGuard], data: { expectedRole: ["CLIENTE"] } },
 { path: "busqueda/:texto", component: BusquedaComponent },
-{ path: "detalle-producto/:codigo", component: DetalleProductoComponent},
-{ path: "carrito", component: CarritoComponent},
-{ path: "gestionar", component: GestionProductosComponent},
+{ path: "detalle-producto/:codigo", component: DetalleProductoComponent, canActivate:
+[RolesGuard], data: { expectedRole: ["CLIENTE"] } },
+{ path: "carrito", component: CarritoComponent , canActivate:
+[RolesGuard], data: { expectedRole: ["CLIENTE"] } },
+//{ path: "gestionar", component: GestionProductosComponent},
 { path: "productos", component: ProductosComponent},
 { path: "favorito/:codigo", component: FavoritoComponent},
 //{ path: "gestionProducto", component: GestionProductosComponent},
@@ -33,8 +36,8 @@ const routes: Routes = [
 //{ path: "favorito/:codigo", component: FavoritoComponent, canActivate: [RolesGuard], data: {
 //    expectedRole: ["CLIENTE"] } },    
 { path: "editar-producto/:codigo", component: CreacionProductoComponent, canActivate:
-    [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
-{ path: "gestionar-productos", component: GestionProductosComponent, canActivate:
+[RolesGuard], data: { expectedRole: ["CLIENTE"] } },
+{ path: "gestionarProductos", component: GestionProductosComponent, canActivate:
     [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
 { path: "revisar-productos", component: RevisarProductosComponent, canActivate: [RolesGuard],
     data: { expectedRole: ["MODERADOR"] } },

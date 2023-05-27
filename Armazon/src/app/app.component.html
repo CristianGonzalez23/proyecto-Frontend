@@ -23,26 +23,30 @@
             >Productos</a
           >
         </li>
+        <li *ngIf="isModerator()">
+          <a routerLink="/revisar-productos" class="nav-link px-2 text-white">Revisar productos</a>
+        </li>
+        
         <li>
-          <a routerLink="/gestionProducto" class="nav-link px-2 text-white"
+          <a routerLink="/gestionProducto" class="nav-link px-2 text-white" *ngIf="isLogged"
             >Mis productos</a
           >
         </li>
         <li>
-          <a routerLink="" class="nav-link px-2 text-white">Mis compras</a>
+          <a routerLink="" class="nav-link px-2 text-white" *ngIf="isLogged">Mis compras</a> 
         </li>
         <li>
-          <a routerLink="/crear-producto" class="nav-link px-2 text-white"
+          <a routerLink="/crear-producto" class="nav-link px-2 text-white" *ngIf="isLogged"
             >Crear Producto</a
           >
         </li>
         <li>
-          <a routerLink="/carrito" class="nav-link px-2 text-white"
-            ><i class="fa-solid fa-cart-plus"></i
-          ></a>
-        </li>
+          <a routerLink="/carrito" class="nav-link px-2 text-white" *ngIf="isLogged">
+            <i class="fa-solid fa-cart-plus"></i>
+          </a>
+        </li>        
         <li>
-          <a routerLink="/favorito" class="nav-link px-2 text-white">
+          <a routerLink="/favorito" class="nav-link px-2 text-white" *ngIf="isLogged">
             <i class="fa-solid fa-heart"></i>
           </a>
         </li>

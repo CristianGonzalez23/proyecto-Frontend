@@ -38,11 +38,11 @@
       <p><strong>Unidades:</strong> {{ publicacion.disponibilidad }}</p>
       <p><strong>Categorías:</strong></p>
       <ul>
-        <li *ngFor="let categoria of publicacion.productoGetDTO.categoria">{{ categoria }}</li>
+        <li *ngFor="let categoria of publicacion.productoGetDTO.categorias">{{ categoria }}</li>
       </ul>
       <p><strong>Ciudades:</strong></p>
       <ul>
-        <li *ngFor="let ciudad of publicacion.productoGetDTO.ciudad">{{ ciudad }}</li>
+        <li *ngFor="let ciudad of publicacion.productoGetDTO.ciudades">{{ ciudad }}</li>
       </ul>
       <h4>Comentarios:</h4>
       <div class="comment card">

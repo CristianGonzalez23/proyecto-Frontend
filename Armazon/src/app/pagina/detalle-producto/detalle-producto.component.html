@@ -35,7 +35,7 @@
     <div class="col-md-8">
       <h3>{{ publicacion.productoGetDTO.nombre }}</h3>
       <p><strong>Precio:</strong> {{ publicacion.precio }}</p>
-      <p><strong>Unidades:</strong> {{ publicacion.unidades }}</p>
+      <p><strong>Unidades:</strong> {{ publicacion.disponibilidad }}</p>
       <p><strong>Categorías:</strong></p>
       <ul>
         <li *ngFor="let categoria of publicacion.productoGetDTO.categoria">{{ categoria }}</li>

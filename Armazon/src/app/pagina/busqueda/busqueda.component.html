@@ -9,6 +9,7 @@
                 <div class="col-md-6">
                     <div class="card-body">
                         <p class="card-text">{{item.productoGetDTO.nombre}}</p>
+                        <p class="card-text">{{item.productoGetDTO.categoria}}</p>
                         <p class="card-text">$ {{item.precio}}</p>
                         <span class="badge text-bg-primary me-2"
                             *ngFor="let cat of item.productoGetDTO.categoria">{{cat}}</span>
@@ -16,7 +17,7 @@
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <div class="btn-group">
                                 <a class="btn btn-sm btn-outline-primary"
-                                    routerLink="/detalle-producto/{{item.productoGetDTO.codigo}}" role="button">Ver
+                                    routerLink="/detalle-producto/{{item.codigoProducto}}" role="button">Ver
                                     detalle</a>
 
                             </div>

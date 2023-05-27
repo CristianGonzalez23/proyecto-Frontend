@@ -36,12 +36,12 @@
           <td><p>{{ item.productoGetDTO.nombre }}</p></td>
           <td><p>{{ item.descripcion }}</p></td>
           <td><p>{{ item.precio }}</p></td>
-          <td><p>{{ item.unidades }}</p></td>
+          <td><p>{{ item.disponibilidad }}</p></td>
           <td><img [src]="item.productoGetDTO.imagenes[0]" width="120" /></td>
           <td><p>{{ item.productoGetDTO.categoria }}</p></td>
           <td>
             <button type="button" class="btn btn-warning rounded-circle me-2"
-            routerLink="/editar-producto/{{item.productoGetDTO.codigo}}"><i class="fa-solid fa-pen"></i>
+            routerLink="/editar-producto/{{item.codigoProducto}}"><i class="fa-solid fa-pen"></i>
             </button>
           </td>
         </tr>

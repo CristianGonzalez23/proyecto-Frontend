@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ComentarioDTO } from 'src/app/modelo/comentario-dto';
 import { ComentarioGetDTO } from 'src/app/modelo/comentario-get-dto';
+import { ProductoDTO } from 'src/app/modelo/producto-dto';
 import { ProductoGetDTO } from 'src/app/modelo/producto-get-dto';
 import { PublicacionProductoDTO } from 'src/app/modelo/publicacion-producto-dto';
 import { CategoriaService } from 'src/app/servicios/categoria.service';
@@ -47,11 +49,29 @@ export class CreacionProductoComponent implements OnInit {
     this.obtenerCat();
 
     this.route.params.subscribe((params) => {
+      //     promedioEstrellas: number = 0;
+      // fechaLimite: Date = new Date();
+      // precio: number = 0;
+      // disponibilidad: number = 0;
+      // descripcion: string = '';
+      // codigoVendedor: number = 0;
+      // codigoProducto: number = 0;
+      // productoDTO: ProductoDTO = new ProductoDTO('nombrecito', [''], [''], ['']);
+      // comentarioDTO: ComentarioDTO[] = [];
       this.codigoProducto = params['codigo'];
       if (this.codigoProducto != null) {
         let objetoProducto = this.productoService.obtener(this.codigoProducto);
         if (objetoProducto != null) {
-          this.producto = objetoProducto;
+          this.producto.codigoPublicacion = objetoProducto.codigo;
+          this.producto.promedioEstrellas = objetoProducto.promedioEstrellas;
+          this.producto.fechaLimite = objetoProducto.fechaLimite;
+          this.producto.precio = objetoProducto.precio;
+          this.producto.disponibilidad = objetoProducto.disponibilidad;
+          this.producto.descripcion = objetoProducto.descripcion;
+          this.producto.codigoVendedor = objetoProducto.codigoVendedor;
+          this.producto.codigoProducto = objetoProducto.codigoProducto;
+          this.producto.productoDTO = objetoProducto.productoGetDTO;
+          this.producto.comentarioDTO = objetoProducto.comentarioGetDTO;
           this.esEdicion = true;
         }
       }
@@ -59,7 +79,6 @@ export class CreacionProductoComponent implements OnInit {
   }
 
   obtenerCat(): void {
-    
     this.categoriaService.listar().subscribe({
       next: (data) => {
         this.categorias = data.respuesta;
@@ -72,7 +91,6 @@ export class CreacionProductoComponent implements OnInit {
   }
 
   obtenerCiudades(): void {
-    
     this.ciudadService.listar().subscribe({
       next: (data) => {
         this.ciudades = data.respuesta;
@@ -85,20 +103,20 @@ export class CreacionProductoComponent implements OnInit {
 
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
-      const files = event.target.files;
-      console.log(files);
+      this.archivos = event.target.files;
+      console.log(this.archivos);
     }
   }
 
   agregarCategoria() {
     if (
-      this.producto.productoGetDTO.categoria &&
+      this.producto.productoDTO.categoria &&
       !this.categoriasSeleccionadas.includes(
-        this.producto.productoGetDTO.categoria
+        this.producto.productoDTO.categoria
       )
     ) {
-      this.categoriasSeleccionadas.push(this.producto.productoGetDTO.categoria);
-      console.log(this.producto.productoGetDTO.categoria);
+      this.categoriasSeleccionadas.push(this.producto.productoDTO.categoria);
+      console.log(this.producto.productoDTO.categoria);
     }
   }
 
@@ -111,11 +129,11 @@ export class CreacionProductoComponent implements OnInit {
 
   agregarCiudad() {
     if (
-      this.producto.productoGetDTO.ciudad &&
-      !this.ciudadesSeleccionadas.includes(this.producto.productoGetDTO.ciudad)
+      this.producto.productoDTO.ciudad &&
+      !this.ciudadesSeleccionadas.includes(this.producto.productoDTO.ciudad)
     ) {
-      this.ciudadesSeleccionadas.push(this.producto.productoGetDTO.ciudad);
-      console.log(this.producto.productoGetDTO.ciudad);
+      this.ciudadesSeleccionadas.push(this.producto.productoDTO.ciudad);
+      console.log(this.producto.productoDTO.ciudad);
     }
   }
 
@@ -127,8 +145,11 @@ export class CreacionProductoComponent implements OnInit {
   }
 
   public crearProducto() {
-    console.log('funciona el emtodo');
-    if (this.producto.productoGetDTO.imagenes.length > 0) {
+    console.log(
+      'el producto de la publicacion es:' +
+        JSON.stringify(this.producto.productoDTO)
+    );
+    if (this.producto.productoDTO.imagenes.length > 0) {
       this.productoService.crearPublicacionProducto(this.producto).subscribe({
         next: (data) => {
           console.log(data.respuesta);
@@ -150,15 +171,20 @@ export class CreacionProductoComponent implements OnInit {
       for (let i = 0; i < this.archivos.length; i++) {
         formData.append('files', this.archivos[i]);
       }
-
-      this.imagenService.subir(formData).subscribe({
-        next: (data) => {
-          // Aquí puedes manejar la respuesta del backend si es necesario
-        },
-        error: (error) => {
-          console.log(error.error);
-        },
-      });
+      console.log('el file de la imagen es:' + JSON.stringify(formData));
+      console.log(
+        'el codigo de la publicacion es ' + this.producto.codigoPublicacion
+      );
+      this.imagenService
+        .subir(formData, this.producto.codigoPublicacion)
+        .subscribe({
+          next: (data) => {
+            // Aquí puedes manejar la respuesta del backend si es necesario
+          },
+          error: (error) => {
+            console.log(error.error);
+          },
+        });
     } else {
       console.log('Debe seleccionar al menos una imagen y subirla');
     }

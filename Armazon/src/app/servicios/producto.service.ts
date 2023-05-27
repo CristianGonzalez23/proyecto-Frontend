@@ -16,135 +16,134 @@ export class ProductoService {
 
   productos: PublicacionProductoGetDTO[];
   categoria: any;
+  productoAux: ProductoGetDTO = new ProductoGetDTO(
+    'Prueba Producto',
+    ['HOGAR'],
+    ['algo.png'],
+    [],
+    ['ARMENIA']
+  );
 
   constructor(private http: HttpClient) {
     this.productos = [];
     this.productos.push(
       new PublicacionProductoGetDTO(
-        500000,
-        20,
-        'alguna descripcion',
+        1,
+        0,
+        new Date(),
+        100000,
+        25,
+        'Publicacion prueba description',
         1,
         1,
-        new ProductoGetDTO(
-          1,
-          'Televisor LG 4K',
-          ['https://picsum.photos/450/225', 'https://picsum.photos/450/225'],
-          ['TECNOLOGIA'],
-          ['ARMENIA']
-        )
+        'APROBADO',
+        this.productoAux,
+        []
       )
     );
     this.productos.push(
       new PublicacionProductoGetDTO(
-        500000,
-        20,
-        'alguna descripcion',
         1,
-        2,
-        new ProductoGetDTO(
-          2,
-          'Tenis Nike',
-          ['https://picsum.photos/450/225'],
-          ['ROPA', 'DEPORTE'],
-          ['BOGOTA']
-        )
+        0,
+        new Date(),
+        100000,
+        25,
+        'Publicacion prueba description',
+        1,
+        1,
+        'APROBADO',
+        this.productoAux,
+        []
       )
     );
     this.productos.push(
       new PublicacionProductoGetDTO(
-        500000,
-        20,
-        'alguna descripcion',
         1,
-        3,
-        new ProductoGetDTO(
-          3,
-          'Medias de futbol',
-          ['https://picsum.photos/450/225'],
-          ['ROPA', 'DEPORTE'],
-          ['BOGOTA']
-        )
+        0,
+        new Date(),
+        100000,
+        25,
+        'Publicacion prueba description',
+        1,
+        1,
+        'APROBADO',
+        this.productoAux,
+        []
       )
     );
     this.productos.push(
       new PublicacionProductoGetDTO(
-        500000,
-        20,
-        'alguna descripcion',
         1,
-        4,
-        new ProductoGetDTO(
-          4,
-          'Guayos',
-          ['https://picsum.photos/450/225'],
-          ['ROPA', 'DEPORTE'],
-          ['BOGOTA']
-        )
+        0,
+        new Date(),
+        100000,
+        25,
+        'Publicacion prueba description',
+        1,
+        1,
+        'APROBADO',
+        this.productoAux,
+        []
       )
     );
     this.productos.push(
       new PublicacionProductoGetDTO(
-        5000000,
-        20,
-        'alguna descripcion',
         1,
-        5,
-        new ProductoGetDTO(
-          5,
-          'Terreneitor',
-          ['https://picsum.photos/450/225'],
-          ['TECNOLOGIA'],
-          ['YOPAL']
-        )
+        0,
+        new Date(),
+        100000,
+        25,
+        'Publicacion prueba description',
+        1,
+        1,
+        'APROBADO',
+        this.productoAux,
+        []
       )
     );
     this.productos.push(
       new PublicacionProductoGetDTO(
-        500000,
-        20,
-        'alguna descripcion',
         1,
-        6,
-        new ProductoGetDTO(
-          6,
-          'Maseta Baby Groot',
-          ['https://picsum.photos/450/225'],
-          ['HOGAR'],
-          ['ARMENIA']
-        )
+        0,
+        new Date(),
+        100000,
+        25,
+        'Publicacion prueba description',
+        1,
+        1,
+        'APROBADO',
+        this.productoAux,
+        []
       )
     );
     this.productos.push(
       new PublicacionProductoGetDTO(
-        500000,
-        20,
-        'alguna descripcion',
         1,
-        7,
-        new ProductoGetDTO(
-          7,
-          'Xbox 360 Usado',
-          ['https://picsum.photos/450/225'],
-          ['TECNOLOGIA'],
-          ['BOGOTA']
-        )
+        0,
+        new Date(),
+        100000,
+        25,
+        'Publicacion prueba description',
+        1,
+        1,
+        'APROBADO',
+        this.productoAux,
+        []
       )
     );
     this.productos.push(
       new PublicacionProductoGetDTO(
-        500000,
-        20,
-        'alguna descripcion',
         1,
-        8,
-        new ProductoGetDTO(
-          8,
-          'Bandana Lebron James',
-          ['https://picsum.photos/450/225'],
-          ['ROPA', 'DEPORTE'],
-          ['BOGOTA']
-        )
+        0,
+        new Date(),
+        100000,
+        25,
+        'Publicacion prueba description',
+        1,
+        1,
+        'APROBADO',
+        this.productoAux,
+        []
       )
     );
   }
@@ -155,9 +154,7 @@ export class ProductoService {
   public obtener(codigo: number): PublicacionProductoGetDTO {
     // Busca la publicación correspondiente al código dado
 
-    const publicacion = this.productos.find(
-      (p) => p.productoGetDTO.codigo == codigo
-    );
+    const publicacion = this.productos.find((p) => p.codigoProducto == codigo);
     // Lanza un error si no se encuentra la publicación
     if (!publicacion) {
       throw new Error(
@@ -198,7 +195,7 @@ export class ProductoService {
       `${this.publiUrl}/listarPublicacionesCategoria/${categoria}`
     );
   }
-  
+
   public listarPublicacionesCiudad(ciudad: any): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(
       `${this.publiUrl}/listarPublicacionesCategoria/${ciudad}`

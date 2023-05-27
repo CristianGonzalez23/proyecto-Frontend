@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 export class ImagenService {
   private imgURL = 'http://localhost:8081/api/imagenes';
   constructor(private http: HttpClient) {}
-  public subir(imagen: FormData): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.imgURL}/upload`, imagen);
+  public subir(imagen: FormData, codigoPublicacion: number): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.imgURL}/upload/${codigoPublicacion}`, imagen);
   }
   public eliminar(id: string): Observable<MensajeDTO> {
     return this.http.delete<MensajeDTO>(`${this.imgURL}/eliminar/${id}`);

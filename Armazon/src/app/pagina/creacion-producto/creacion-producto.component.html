@@ -1,5 +1,5 @@
 <div class="card p-5">
-    <form #f="ngForm" (ngSubmit)="crearProducto()">
+    <form #f="ngForm" >
         <div class="mb-3">
             <label>Nombre:</label>
             <input #nombre="ngModel" class="form-control" [ngClass]="
@@ -105,9 +105,8 @@
         </div>
         <div>
         </div>
-        <button type="submit" [disabled]="f.invalid" class="btn btn-primary">
-            <i class="fa-solid fa-circle-plus me-1"></i>
-            Crear Producto
+        <button type="submit" [disabled]="f.invalid" class="btn btn-primary" (click)="crearProducto()">
+        <i class="fa-solid fa-circle-plus me-1"></i>  Crear Producto
         </button>
     </form>
 </div>

@@ -2,7 +2,7 @@ import { ComentarioDTO } from './comentario-dto';
 import { ProductoDTO } from './producto-dto';
 
 export class PublicacionProductoDTO {
-  codigoPublicacion: number = 0;
+  codigoPublicacion: number = 1;
   promedioEstrellas: number = 0;
   fechaLimite: Date = new Date();
   precio: number = 0;
@@ -12,6 +12,7 @@ export class PublicacionProductoDTO {
   codigoProducto: number = 1;
   productoDTO: ProductoDTO = new ProductoDTO('', [''], [''], ['']);
   comentarioDTO: ComentarioDTO[] = [];
+  subirImagen: any;
 /*
   constructor(
     promedioEstrellas: number,

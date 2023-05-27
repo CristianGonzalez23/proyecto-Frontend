@@ -14,6 +14,10 @@ export class UsuarioService {
     return this.http.get<MensajeDTO>(`${this.userUrl}/obtener/${codigo}`);
   }
 
+  public obtenerID(token: String): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.userUrl}/obtenerID/${token}`);
+  }
+
   public eliminar(codigo: number): Observable<MensajeDTO> {
     return this.http.delete<MensajeDTO>(`${this.userUrl}/eliminar/${codigo}`);
   }

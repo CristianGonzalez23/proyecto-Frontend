@@ -20,11 +20,11 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 export class DetalleProductoComponent implements OnInit {
   //cambios comentario +
   alerta!: Alerta;
- // comentarioTexto: string = '';
+  // comentarioTexto: string = '';
   comentarios: ComentarioDTO[] = [];
   valoracionSeleccionada: number = 0;
   comentario: ComentarioDTO;
-  correo: String | null = "";
+  correo: String | null = '';
 
   //fin cambios comentario
 
@@ -40,11 +40,10 @@ export class DetalleProductoComponent implements OnInit {
     //cambios para comentario !!!
     private comentarioService: ComentarioService,
     private tokenService: TokenService,
-    private usuarioService: UsuarioService
-  ) ///
-  {
+    private usuarioService: UsuarioService ///
+  ) {
     this.publicacion = productoService.obtener(1);
-    this.comentario = new ComentarioDTO("", 0, 0, 0);
+    this.comentario = new ComentarioDTO('', 0, 0, 0);
   }
 
   ngOnInit(): void {
@@ -70,7 +69,6 @@ export class DetalleProductoComponent implements OnInit {
     this.carritoService.quitar(this.codigoProducto);
   }
 
-
   //---------- nuevo metodo----------
 
   getStarClass(starNumber: number): string {
@@ -89,8 +87,6 @@ export class DetalleProductoComponent implements OnInit {
     this.valoracionSeleccionada = cantidadEstrellas;
     this.comentario.estrellas = this.valoracionSeleccionada;
   }
-  
-  
 
   getStarsArray(starNumber: number): number[] {
     const roundedStars = Math.round(starNumber);
@@ -106,12 +102,33 @@ export class DetalleProductoComponent implements OnInit {
   //--------------------------------------envio comentario y borrar comentario +
   enviarComentario() {
     this.correo = this.tokenService.getEmail();
-  
+
     if (this.correo) {
       this.usuarioService.obtenerID(this.correo).subscribe({
         next: (data) => {
+          this.comentario.texto = this.comentario.texto; // Asignar el valor del comentario al campo 'texto'
+          this.comentario.estrellas = this.valoracionSeleccionada; // Asignar la valoración seleccionada
           this.comentario.codigoUsuario = data.respuesta;
           this.comentario.codigoPublicacionProducto = this.publicacion.codigo;
+          console.log(
+            'el codigo de usuario es ' +
+              this.comentario.codigoUsuario +
+              ' y el de publi es ' +
+              this.comentario.codigoPublicacionProducto
+          );
+
+          const objeto = this;
+          this.comentarioService.crearComentario(this.comentario).subscribe({
+            next: (data) => {
+              objeto.alerta = new Alerta(data.respuesta, 'success');
+              location.reload(); // Refrescar la página
+            },
+            error: (error) => {
+              objeto.alerta = new Alerta(error.error.respuesta, 'danger');
+            },
+          });
+
+          //this.obtenerComentarios();
         },
         error: (error) => {
           console.log(error.error);
@@ -120,23 +137,7 @@ export class DetalleProductoComponent implements OnInit {
     } else {
       console.log('El valor de correo es null');
     }
-  
-    this.comentario.texto = this.comentario.texto; // Asignar el valor del comentario al campo 'texto'
-    this.comentario.estrellas = this.valoracionSeleccionada; // Asignar la valoración seleccionada
-  
-    const objeto = this;
-  
-    this.comentarioService.crearComentario(this.comentario).subscribe({
-      next: (data) => {
-        objeto.alerta = new Alerta(data.respuesta, 'success');
-      },
-      error: (error) => {
-        objeto.alerta = new Alerta(error.error.respuesta, 'danger');
-      },
-    });
-    this.obtenerComentarios(); 
   }
-  
 
   borrarComentario() {
     // Aquí puedes realizar acciones con el comentario, como enviarlo al servidor

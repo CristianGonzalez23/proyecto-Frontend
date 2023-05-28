@@ -14,7 +14,7 @@ export class ComentarioService {
   public crearComentario(
     comentario: ComentarioDTO
   ): Observable<MensajeDTO> {
-    console.log("comentario: "+ComentarioDTO)
+    console.log("comentario: "+ JSON.stringify(comentario))
     return this.http.post<MensajeDTO>(`${this.comURL}/crear`, comentario);
   }
 

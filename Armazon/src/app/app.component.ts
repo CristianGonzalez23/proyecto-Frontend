@@ -9,7 +9,7 @@ import { SesionService } from './servicios/sesion.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'Unimarket';
+  title = 'Armazon';
   isLogged = false;
   email: string = '';
 

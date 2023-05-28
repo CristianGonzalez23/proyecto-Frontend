@@ -12,15 +12,23 @@ export class BusquedaComponent {
   textoBusqueda: string;
   // productos: ProductoGetDTO[];
   // filtro: ProductoGetDTO[];
-  productos: PublicacionProductoGetDTO[];
+  productos: PublicacionProductoGetDTO[] = [];
   filtro: PublicacionProductoGetDTO[];
   constructor(
     private route: ActivatedRoute,
-    private productoServicio: ProductoService
+    private productoService: ProductoService
   ) {
     this.textoBusqueda = '';
 
-    this.productos = this.productoServicio.listar();
+    this.productoService.listarTodasLasPublicaciones().subscribe({
+      next: (data) => {
+        this.productos = data.respuesta;
+      },
+      error: (error) => {
+        console.log(error.error);
+        console.log('Ocurrió un error al obtener las publicaciones');
+      },
+    });
     this.filtro = [];
 
     this.route.params.subscribe((params) => {
@@ -31,6 +39,5 @@ export class BusquedaComponent {
           .includes(this.textoBusqueda.toLowerCase())
       );
     });
-    //jmmm ta raro
   }
 }

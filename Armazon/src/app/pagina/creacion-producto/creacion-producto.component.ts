@@ -157,9 +157,13 @@ export class CreacionProductoComponent implements OnInit {
         JSON.stringify(this.producto.productoDTO)
     );
     if (this.producto.productoDTO.imagenes.length > 0) {
-      
       this.correo = this.tokenService.getEmail();
-
+      this.producto.productoDTO.categorias = this.categoriasSeleccionadas;
+      this.producto.productoDTO.ciudades= this.ciudadesSeleccionadas; // Asignar el arreglo de categorías seleccionadas
+      console.log(
+        'El producto de la publicación es:' +
+        JSON.stringify(this.producto.productoDTO)
+      );
       if (this.correo) {
         this.usuarioService.obtenerID(this.correo).subscribe({
           next: (data) => {

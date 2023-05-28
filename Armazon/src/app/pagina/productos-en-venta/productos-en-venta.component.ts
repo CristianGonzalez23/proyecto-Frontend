@@ -23,7 +23,15 @@ export class ProductosComponent implements OnInit {
   }
 
   obtenerProductos(): void {
-    this.productos = this.productoService.listar();
+    this.productoService.listarTodasLasPublicaciones().subscribe({
+      next: (data) => {
+        this.productos = data.respuesta;
+      },
+      error: (error) => {
+        console.log(error.error);
+        console.log('Ocurrió un error al obtener las publicaciones');
+      },
+    });
   }
 
   obtenerCat(): void {

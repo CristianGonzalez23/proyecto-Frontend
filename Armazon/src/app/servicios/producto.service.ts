@@ -168,6 +168,7 @@ export class ProductoService {
   public crearPublicacionProducto(
     publicacion: PublicacionProductoDTO
   ): Observable<MensajeDTO> {
+    console.log("desde producto service: "+publicacion.productoDTO.categorias)
     return this.http.post<MensajeDTO>(`${this.publiUrl}/crear`, publicacion);
   }
 
@@ -207,4 +208,11 @@ export class ProductoService {
       `${this.publiUrl}/listarPublicacionesCategoria/${precio}`
     );
   }
+
+  public listarTodasLasPublicaciones(): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(
+      `${this.publiUrl}/listarPublicaciones`
+    );
+  }
+
 }

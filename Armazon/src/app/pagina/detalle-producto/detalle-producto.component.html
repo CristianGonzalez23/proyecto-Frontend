@@ -4,7 +4,7 @@
         <div class="carousel-inner">
           <ng-container *ngFor="let imagen of publicacion.productoGetDTO.imagenes; let i = index">
             <div class="carousel-item" [class.active]="i === 0">
-              <img [src]="imagen" class="d-block w-100" alt="Imagen del producto">
+              <img [src]="publicacion.productoGetDTO.imagenes[1]" class="d-block w-100" alt="Imagen del producto">
             </div>
           </ng-container>
         </div>

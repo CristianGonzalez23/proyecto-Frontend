@@ -172,7 +172,7 @@ export class ProductoService {
     return this.http.post<MensajeDTO>(`${this.publiUrl}/crear`, publicacion);
   }
 
-  public obtenerpublicacion(codigo: number): Observable<MensajeDTO> {
+  public obtenerPublicacion(codigo: number): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(
       `${this.publiUrl}/obtenerByCodigo/${codigo}`
     );

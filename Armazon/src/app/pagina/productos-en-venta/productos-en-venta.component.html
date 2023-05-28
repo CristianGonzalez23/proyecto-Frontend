@@ -27,7 +27,9 @@
             <p class="card-text">Precio: {{producto.precio}}</p>
             <p class="card-text">Categoría: {{producto.productoGetDTO.categorias.join(", ")}}</p>
             <p class="card-text">Ciudad: {{producto.productoGetDTO.ciudades.join(", ")}}</p>
-            <button class="btn btn-primary">Comprar</button>
+          </div>
+          <div class="card-footer">
+            <a class="btn btn-primary" [routerLink]="'/detalle-producto/' + producto.codigoProducto">Ver detalle</a>
           </div>
         </div>
       </div>

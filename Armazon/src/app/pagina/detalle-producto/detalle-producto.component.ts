@@ -33,7 +33,15 @@ export class DetalleProductoComponent implements OnInit {
   ngOnInit(): void {
     const codigo = this.route.snapshot.paramMap.get('codigo');
     this.codigoProducto = codigo ? parseInt(codigo) : 0;
-    this.publicacion = this.productoService.obtener(this.codigoProducto);
+    this.productoService.obtenerPublicacion(this.codigoProducto).subscribe({
+      next: (data) => {
+        this.publicacion = data.respuesta;
+      },
+      error: (error) => {
+        console.log(error.error);
+        console.log('Ocurrió un error al obtener la publicacion');
+      },
+    });
   }
 
   public agregarCarrito(){

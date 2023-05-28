@@ -168,7 +168,10 @@ export class ProductoService {
   public crearPublicacionProducto(
     publicacion: PublicacionProductoDTO
   ): Observable<MensajeDTO> {
-    console.log("desde producto service: "+publicacion.productoDTO.categorias)
+    console.log("desde producto service: cod producto "+publicacion.codigoProducto)
+    console.log("desde producto service: cod publi "+publicacion.codigoPublicacion)
+    console.log("desde producto service: cod vendedor "+publicacion.codigoVendedor)
+
     return this.http.post<MensajeDTO>(`${this.publiUrl}/crear`, publicacion);
   }
 

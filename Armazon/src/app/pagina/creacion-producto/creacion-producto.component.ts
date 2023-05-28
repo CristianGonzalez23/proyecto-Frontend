@@ -25,7 +25,7 @@ export class CreacionProductoComponent implements OnInit {
   objetoProducto: PublicacionProductoGetDTO | undefined;
   esEdicion: boolean = false;
   codigoProducto: number;
-  correo: String | null = "";
+  correo: String | null = '';
   /*
   categorias: string[] = [];
   categoriasSeleccionadas: string[] = [];
@@ -68,7 +68,7 @@ export class CreacionProductoComponent implements OnInit {
       // productoDTO: ProductoDTO = new ProductoDTO('nombrecito', [''], [''], ['']);
       // comentarioDTO: ComentarioDTO[] = [];
       this.codigoProducto = params['codigo'];
-      
+
       if (this.codigoProducto != null) {
         this.productoService.obtenerPublicacion(this.codigoProducto).subscribe({
           next: (data) => {
@@ -79,9 +79,9 @@ export class CreacionProductoComponent implements OnInit {
           },
         });
         if (this.objetoProducto != null) {
-          
           this.producto.codigoPublicacion = this.objetoProducto.codigo;
-          this.producto.promedioEstrellas = this.objetoProducto.promedioEstrellas;
+          this.producto.promedioEstrellas =
+            this.objetoProducto.promedioEstrellas;
           this.producto.fechaLimite = this.objetoProducto.fechaLimite;
           this.producto.precio = this.objetoProducto.precio;
           this.producto.disponibilidad = this.objetoProducto.disponibilidad;
@@ -165,20 +165,55 @@ export class CreacionProductoComponent implements OnInit {
   public crearProducto() {
     console.log(
       'el producto de la publicacion es:' +
+        JSON.stringify(this.producto) +
+        'y producto es ' +
         JSON.stringify(this.producto.productoDTO)
     );
     if (this.producto.productoDTO.imagenes.length > 0) {
       this.correo = this.tokenService.getEmail();
       this.producto.productoDTO.categorias = this.categoriasSeleccionadas;
-      this.producto.productoDTO.ciudades= this.ciudadesSeleccionadas; // Asignar el arreglo de categorías seleccionadas
-      console.log(
-        'El producto de la publicación es:' +
-        JSON.stringify(this.producto.productoDTO)
-      );
+      this.producto.productoDTO.ciudades = this.ciudadesSeleccionadas; // Asignar el arreglo de categorías seleccionadas
+      // console.log(
+      //   'El producto de la publicación es:' +
+      //   JSON.stringify(this.producto.productoDTO)
+      // );
       if (this.correo) {
         this.usuarioService.obtenerID(this.correo).subscribe({
           next: (data) => {
             this.producto.codigoVendedor = data.respuesta;
+            ////
+            const objeto = this;
+            if (this.producto.codigoProducto > 0) {
+              this.productoService
+                .actualizarPublicacionProducto(
+                  this.producto.codigoProducto,
+                  this.producto
+                )
+                .subscribe({
+                  next: (data) => {
+                    objeto.alerta = new Alerta(data.respuesta, 'success');
+                  },
+                  error: (error) => {
+                    objeto.alerta = new Alerta(error.error.respuesta, 'danger');
+                  },
+                });
+            } else {
+              console.log(
+                'el codigo del venedor es' + this.producto.codigoVendedor
+              );
+
+              this.productoService
+                .crearPublicacionProducto(this.producto)
+                .subscribe({
+                  next: (data) => {
+                    objeto.alerta = new Alerta(data.respuesta, 'success');
+                  },
+                  error: (error) => {
+                    objeto.alerta = new Alerta(error.error.respuesta, 'danger');
+                  },
+                });
+            }
+            ////
           },
           error: (error) => {
             console.log(error.error);
@@ -187,47 +222,27 @@ export class CreacionProductoComponent implements OnInit {
       } else {
         console.log('El valor de correo es null');
       }
-      const objeto = this;
-      if(this.producto.codigoProducto > 0){
-
-        this.productoService.actualizarPublicacionProducto(this.producto.codigoProducto, this.producto).subscribe({
-          next: (data) => {
-            objeto.alerta = new Alerta(data.respuesta, 'success');
-          },
-          error: (error) => {
-            objeto.alerta = new Alerta(error.error.respuesta, 'danger');
-          },
-        });
-
-      }else{
-      this.productoService.crearPublicacionProducto(this.producto).subscribe({
-        next: (data) => {
-          objeto.alerta = new Alerta(data.respuesta, 'success');
-        },
-        error: (error) => {
-          objeto.alerta = new Alerta(error.error.respuesta, 'danger');
-        },
-      });}
     } else {
       console.log('Debe seleccionar al menos una imagen y subirla');
     }
   }
 
-  
   public subirImagenes() {
     if (this.archivos != null && this.archivos.length > 0) {
       const objeto = this.producto;
       const formData = new FormData();
       formData.append('file', this.archivos[0]);
-      
+
       console.log('el file de la imagen es:' + JSON.stringify(formData));
       console.log(
         'el codigo de la publicacion es ' + this.producto.codigoPublicacion
       );
-      this.imagenService.subir(formData, this.producto.codigoPublicacion).subscribe({
+      this.imagenService
+        .subir(formData, this.producto.codigoPublicacion)
+        .subscribe({
           next: (data) => {
-            objeto.productoDTO.imagenes.push( data.respuesta.url );
-            
+            objeto.productoDTO.imagenes.push(data.respuesta.url);
+
             // Aquí puedes manejar la respuesta del backend si es necesario
           },
           error: (error) => {

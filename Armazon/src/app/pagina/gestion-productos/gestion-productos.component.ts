@@ -16,6 +16,7 @@ export class GestionProductosComponent implements OnInit {
   textoBtnEliminar: string;
   correo: string | null = "";
   codigoProducto: number = 0;
+  miCodigoVendedor: number = 0;
 
   constructor(
     private productoServicio: ProductoService,
@@ -36,7 +37,23 @@ export class GestionProductosComponent implements OnInit {
     if (this.correo) {
       this.usuarioService.obtenerID(this.correo).subscribe({
         next: (data) => {
-          this.codigoProducto = data.respuesta;
+          this.miCodigoVendedor = data.respuesta;
+          console.log("mi codigo es: "+this.miCodigoVendedor)
+
+          ////////cambio prueba
+          this.productoServicio.listarMisPublicaciones(this.miCodigoVendedor).subscribe({
+            next: (data) => {
+              this.publicacionProductos = data.respuesta;
+            },
+            error: (error) => {
+              console.log(error.error);
+            },
+          });
+
+
+          ////////
+
+
         },
         error: (error) => {
           console.log(error.error);
@@ -46,14 +63,7 @@ export class GestionProductosComponent implements OnInit {
       console.log('El valor de correo es null');
     }
 
-    this.productoServicio.listarMisPublicaciones(this.codigoProducto).subscribe({
-      next: (data) => {
-        this.publicacionProductos = data.respuesta;
-      },
-      error: (error) => {
-        console.log(error.error);
-      },
-    });
+    
   }
 
   public seleccionar(publicacionProductos: PublicacionProductoGetDTO, estado: boolean) {

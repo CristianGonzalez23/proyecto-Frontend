@@ -8,8 +8,8 @@ export class PublicacionProductoDTO {
   precio: number = 0;
   disponibilidad: number = 0;
   descripcion: string = '';
-  codigoVendedor: number = 1;
-  codigoProducto: number = 1;
+  codigoVendedor: number = 0;
+  codigoProducto: number = 0;
   productoDTO: ProductoDTO = new ProductoDTO('', [''], [''], ['']);
   comentarioDTO: ComentarioDTO[] = [];
   subirImagen: any;

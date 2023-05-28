@@ -184,10 +184,9 @@ export class ProductoService {
     );
   }
 
-  public actualizar(codigo: number, unidades: number): Observable<MensajeDTO> {
+  public actualizarPublicacionProducto(codigoPublicacion: number, publicacionProductoDTO:PublicacionProductoDTO): Observable<MensajeDTO> {
     return this.http.put<MensajeDTO>(
-      `${this.publiUrl}/actualizar/${unidades}`,
-      codigo
+      `${this.publiUrl}/actualizar/${codigoPublicacion}`, publicacionProductoDTO
     );
   }
 
@@ -212,6 +211,18 @@ export class ProductoService {
   public listarTodasLasPublicaciones(): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(
       `${this.publiUrl}/listarPublicaciones`
+    );
+  }
+
+  public listarPublicacionEstado(estado: String): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(
+      `${this.publiUrl}/listarPublicacionEstado/${estado}`
+    );
+  }
+
+  public listarMisPublicaciones(codigoUsuario: number): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(
+      `${this.publiUrl}/listarMisPublicaciones/${codigoUsuario}`
     );
   }
 

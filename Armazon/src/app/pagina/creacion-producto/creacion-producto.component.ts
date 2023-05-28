@@ -6,6 +6,7 @@ import { ComentarioGetDTO } from 'src/app/modelo/comentario-get-dto';
 import { ProductoDTO } from 'src/app/modelo/producto-dto';
 import { ProductoGetDTO } from 'src/app/modelo/producto-get-dto';
 import { PublicacionProductoDTO } from 'src/app/modelo/publicacion-producto-dto';
+import { PublicacionProductoGetDTO } from 'src/app/modelo/publicacion-producto-get-dto';
 import { CategoriaService } from 'src/app/servicios/categoria.service';
 import { CiudadService } from 'src/app/servicios/ciudad.service';
 import { ImagenService } from 'src/app/servicios/imagen.service';
@@ -21,6 +22,7 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 export class CreacionProductoComponent implements OnInit {
   archivos!: FileList;
   producto: PublicacionProductoDTO;
+  objetoProducto: PublicacionProductoGetDTO | undefined;
   esEdicion: boolean = false;
   codigoProducto: number;
   correo: String | null = "";
@@ -66,19 +68,28 @@ export class CreacionProductoComponent implements OnInit {
       // productoDTO: ProductoDTO = new ProductoDTO('nombrecito', [''], [''], ['']);
       // comentarioDTO: ComentarioDTO[] = [];
       this.codigoProducto = params['codigo'];
+      
       if (this.codigoProducto != null) {
-        let objetoProducto = this.productoService.obtener(this.codigoProducto);
-        if (objetoProducto != null) {
-          this.producto.codigoPublicacion = objetoProducto.codigo;
-          this.producto.promedioEstrellas = objetoProducto.promedioEstrellas;
-          this.producto.fechaLimite = objetoProducto.fechaLimite;
-          this.producto.precio = objetoProducto.precio;
-          this.producto.disponibilidad = objetoProducto.disponibilidad;
-          this.producto.descripcion = objetoProducto.descripcion;
-          this.producto.codigoVendedor = objetoProducto.codigoVendedor;
-          this.producto.codigoProducto = objetoProducto.codigoProducto;
-          this.producto.productoDTO = objetoProducto.productoGetDTO;
-          this.producto.comentarioDTO = objetoProducto.comentarioGetDTO;
+        this.productoService.obtenerPublicacion(this.codigoProducto).subscribe({
+          next: (data) => {
+            this.objetoProducto = data.respuesta;
+          },
+          error: (error) => {
+            console.log(error.error);
+          },
+        });
+        if (this.objetoProducto != null) {
+          
+          this.producto.codigoPublicacion = this.objetoProducto.codigo;
+          this.producto.promedioEstrellas = this.objetoProducto.promedioEstrellas;
+          this.producto.fechaLimite = this.objetoProducto.fechaLimite;
+          this.producto.precio = this.objetoProducto.precio;
+          this.producto.disponibilidad = this.objetoProducto.disponibilidad;
+          this.producto.descripcion = this.objetoProducto.descripcion;
+          this.producto.codigoVendedor = this.objetoProducto.codigoVendedor;
+          this.producto.codigoProducto = this.objetoProducto.codigoProducto;
+          this.producto.productoDTO = this.objetoProducto.productoGetDTO;
+          this.producto.comentarioDTO = this.objetoProducto.comentarioGetDTO;
           this.esEdicion = true;
         }
       }
@@ -177,6 +188,18 @@ export class CreacionProductoComponent implements OnInit {
         console.log('El valor de correo es null');
       }
       const objeto = this;
+      if(this.producto.codigoProducto > 0){
+
+        this.productoService.actualizarPublicacionProducto(this.producto.codigoProducto, this.producto).subscribe({
+          next: (data) => {
+            objeto.alerta = new Alerta(data.respuesta, 'success');
+          },
+          error: (error) => {
+            objeto.alerta = new Alerta(error.error.respuesta, 'danger');
+          },
+        });
+
+      }else{
       this.productoService.crearPublicacionProducto(this.producto).subscribe({
         next: (data) => {
           objeto.alerta = new Alerta(data.respuesta, 'success');
@@ -184,7 +207,7 @@ export class CreacionProductoComponent implements OnInit {
         error: (error) => {
           objeto.alerta = new Alerta(error.error.respuesta, 'danger');
         },
-      });
+      });}
     } else {
       console.log('Debe seleccionar al menos una imagen y subirla');
     }

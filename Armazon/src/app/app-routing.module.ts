@@ -13,12 +13,16 @@ import { LoginGuard } from './guards/permiso.service';
 import { RolesGuard } from './guards/roles.service';
 import { RevisarProductosComponent } from './pagina/revisar-productos/revisar-productos.component';
 import { FavoritoComponent } from './pagina/favorito/favorito.component';
+import { AdministradorComponent } from './pagina/administrador/administrador.component';
+import { RestablecerPasswordComponent } from './pagina/restablecer-password/restablecer-password.component';
 
 
 const routes: Routes = [
 { path: "", component: InicioComponent },
 { path: "login", component: LoginComponent, canActivate: [LoginGuard] },
 { path: "registro", component: RegistroComponent, canActivate: [LoginGuard] },
+{ path: "restablecer-password", component: RestablecerPasswordComponent, canActivate: [LoginGuard]},
+
 { path: "publicacionProducto", component: CreacionProductoComponent , canActivate:
 [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
 { path: "busqueda/:texto", component: BusquedaComponent },
@@ -39,6 +43,8 @@ const routes: Routes = [
 [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
 { path: "gestionarProductos", component: GestionProductosComponent, canActivate:
     [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
+{ path: "administrador", component: AdministradorComponent, canActivate: [RolesGuard],
+    data: { expectedRole: ["MODERADOR"] } },
 { path: "revisar-productos", component: RevisarProductosComponent, canActivate: [RolesGuard],
     data: { expectedRole: ["MODERADOR"] } },
 { path: "**", pathMatch: "full", redirectTo: "" }

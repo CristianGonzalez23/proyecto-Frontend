@@ -27,4 +27,12 @@ export class AuthService {
     return this.http.post<MensajeDTO>(`${this.authURL}/refresh`, token);
   }
 
+  public solicitarCambioContrasena(email: string): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.authURL}/solicitar?email=${encodeURIComponent(email)}`, null);
+  }
+
+  public cambiarContrasena(token:string, contrasena: string): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.authURL}/confirmarCambio?token=${encodeURIComponent(token)}&contrasena=${encodeURIComponent(contrasena)}`, null);
+  }
+  
 }

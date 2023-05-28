@@ -20,6 +20,7 @@ import { ProductoComponent } from './pagina/producto/producto.component';
 import { RevisarProductosComponent } from './pagina/revisar-productos/revisar-productos.component';
 import { UsuarioInterceptor } from './interceptor/usuario.interceptor';
 import { ProductosComponent } from './pagina/productos-en-venta/productos-en-venta.component';
+import { RestablecerPasswordComponent } from './pagina/restablecer-password/restablecer-password.component';
 
 
 @NgModule({
@@ -37,7 +38,9 @@ import { ProductosComponent } from './pagina/productos-en-venta/productos-en-ven
     AlertaComponent,
     GestionProductosComponent,
     RevisarProductosComponent,
-    ProductosComponent
+    ProductosComponent,
+    RestablecerPasswordComponent
+ 
   ],
   imports: [
     HttpClientModule,

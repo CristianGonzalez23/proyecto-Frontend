@@ -12,6 +12,8 @@ import { Alerta } from 'src/app/modelo/alerta';
 import { TokenService } from 'src/app/servicios/token.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { FavoritoService } from 'src/app/servicios/favorito.service';
+import { PublicacionProductoDTO } from 'src/app/modelo/publicacion-producto-dto';
+import { ComentarioGetDTO } from 'src/app/modelo/comentario-get-dto';
 
 @Component({
   selector: 'app-detalle-producto',
@@ -45,7 +47,7 @@ export class DetalleProductoComponent implements OnInit {
     private tokenService: TokenService,
     private usuarioService: UsuarioService ///
   ) {
-    this.publicacion = productoService.obtener(1);
+    this.publicacion = new PublicacionProductoGetDTO(0,0,new Date,0,0,"",0,0,"",new ProductoGetDTO("",[],[],[],[]), []);//productoService.obtener(1);
     this.comentario = new ComentarioDTO('', 0, 0, 0);
   }
 

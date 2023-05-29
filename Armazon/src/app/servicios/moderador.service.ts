@@ -15,7 +15,7 @@ export class ModeradorService {
 
   public autorizacionPublicacion(productoModeradorDTO:ProductoModeradorDTO ): Observable<MensajeDTO> {
     
-    return this.http.post<MensajeDTO>(`${this.publiUrl}/autorizacionPublicacion`, productoModeradorDTO);
+    return this.http.put<MensajeDTO>(`${this.publiUrl}/autorizacionPublicacion`, productoModeradorDTO);
   }
 
 }

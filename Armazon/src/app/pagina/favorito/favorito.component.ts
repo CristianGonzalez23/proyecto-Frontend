@@ -43,7 +43,9 @@ export class FavoritoComponent {
           console.log("mi codigo es: "+this.miCodigo)
           this.productoService.listarMisPublicacionesFavoritas(this.miCodigo).subscribe({
             next: (data) => {
+            
               this.productos = data.respuesta;
+              console.log("publ favoritas "+JSON.stringify(this.productos)  )
             },
             error: (error) => {
               console.log(error.error);

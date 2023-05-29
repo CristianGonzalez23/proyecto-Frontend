@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Alerta } from 'src/app/modelo/alerta';
 import { CompraDTO } from 'src/app/modelo/compra-dto';
 import { DetalleCompraDTO } from 'src/app/modelo/detalle-compra-dto';
+import { DetalleCompraGetDTO } from 'src/app/modelo/detalle-compra-get-dto';
+import { ProductoGetDTO } from 'src/app/modelo/producto-get-dto';
 import { PublicacionProductoGetDTO } from 'src/app/modelo/publicacion-producto-get-dto';
 import { UsuarioDTO } from 'src/app/modelo/usuario-dto';
 import { CarritoService } from 'src/app/servicios/carrito.service';
@@ -16,6 +18,8 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
   styleUrls: ['./carrito.component.css']
 })
 export class CarritoComponent {
+  archivos!: FileList;
+
   usuario: UsuarioDTO = new UsuarioDTO("", "", "", "", "", "");
   metodoPago: string = '';
   productos: PublicacionProductoGetDTO[] = [];
@@ -23,8 +27,11 @@ export class CarritoComponent {
   alerta: Alerta | null = null;
   compra: CompraDTO = new CompraDTO("", 0, []);
   detalle: DetalleCompraDTO[] = [];
-
+  producto: PublicacionProductoGetDTO;
+  unidades: number=0;
   correo: string | null = null;
+  detalleCompra: DetalleCompraDTO;
+  metodoPagos:string[];
 
   constructor(
     private carritoService: CarritoService,
@@ -37,21 +44,61 @@ export class CarritoComponent {
     this.productos = [];
     this.detalle = [];
     this.valorTotal = 0;
+    this.unidades=0;
+    this.producto = new PublicacionProductoGetDTO(0,0,new Date,0,0,"",0,0,"",new ProductoGetDTO("",[],[],[],[]), []);//productoService.obtener(1);
+    this.detalleCompra = new DetalleCompraDTO(0,0);
+    this.metodoPagos=[];
+    this.cargarMetodoPagos();
+
     const listaCodigos = this.carritoService.listar();
 
     if (listaCodigos.length > 0) {
       for (const cod of listaCodigos) {
-        const producto = this.productoService.obtener(cod);
-        if (producto != null) {
-          this.productos.push(producto);
-          const detalleCompra = new DetalleCompraDTO(1, producto.codigo);
-          detalleCompra.unidades = 1; // Establecer unidades en 1
-          this.detalle.push(detalleCompra);
-          this.valorTotal += producto.precio;
-        }
+
+        ///////////////
+        this.productoService.obtenerPublicacion(cod).subscribe({
+          next: (data) => {
+            this.producto = data.respuesta;
+            console.log("prodicto es "+JSON.stringify(this.producto))
+
+
+              
+              if (this.producto != null) {
+                this.productos.push(this.producto);
+
+
+                this.detalleCompra.unidades = 1;
+                const detalleCompra = new DetalleCompraDTO(1, this.producto.codigo);
+                detalleCompra.unidades = 1; // Establecer unidades en 1
+                this.detalle.push(detalleCompra);
+                this.valorTotal += this.producto.precio;
+              }
+          },
+          error: (error) => {
+            console.log(error.error);
+            console.log('Ocurrió un error al obtener la publicacion');
+          },
+        });
+
+      
       }
     }
   }
+
+  onFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      this.archivos = event.target.files;
+      console.log(this.archivos);
+    }
+  }
+
+  private cargarMetodoPagos(){
+    this.metodoPagos.push('NEQUI');
+    this.metodoPagos.push('VISA');
+    this.metodoPagos.push('MASTERCARD');
+    this.metodoPagos.push('DAVIPLATA');
+    this.metodoPagos.push('CREDITO');
+    }
 
   obtenerID(): void {
     this.correo = this.tokenService.getEmail();
@@ -127,6 +174,8 @@ export class CarritoComponent {
         next: (data) => {
           this.compra.codigoUsuario = data.respuesta;
           this.compra.metodoPago = this.metodoPago;
+          console.log("metodo de pgo "+this.compra.metodoPago)
+
           this.compra.detalleCompraDTO = this.detalle;
 
           this.compraService.realizarCompra(this.compra).subscribe({

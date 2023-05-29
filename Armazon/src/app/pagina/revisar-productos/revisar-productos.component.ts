@@ -114,7 +114,7 @@ export class RevisarProductosComponent implements OnInit {
 
     console.log('Producto aprobado:', this.productoModerador);
 
-    this.mostrarProductoAnterior();
+    this.obtenerProductos();
   }
 
   noAprobarProducto(): void {

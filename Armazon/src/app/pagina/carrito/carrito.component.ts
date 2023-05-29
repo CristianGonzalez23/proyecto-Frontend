@@ -54,8 +54,6 @@ export class CarritoComponent {
 
     if (listaCodigos.length > 0) {
       for (const cod of listaCodigos) {
-
-        ///////////////
         this.productoService.obtenerPublicacion(cod).subscribe({
           next: (data) => {
             this.producto = data.respuesta;
@@ -69,7 +67,7 @@ export class CarritoComponent {
 
                 this.detalleCompra.unidades = 1;
                 const detalleCompra = new DetalleCompraDTO(1, this.producto.codigo);
-                detalleCompra.unidades = 1; // Establecer unidades en 1
+                detalleCompra.unidades = 1;
                 this.detalle.push(detalleCompra);
                 this.valorTotal += this.producto.precio;
               }
@@ -110,6 +108,7 @@ export class CarritoComponent {
           this.usuarioService.obtener(codigoUser).subscribe({
             next: (data) => {
               this.usuario = data.respuesta;
+              console.log("apellido es "+this.usuario.apellido)
             },
             error: (error) => {
               console.log(error);
@@ -142,6 +141,7 @@ export class CarritoComponent {
 
     for (const item of this.productos) {
       const detalle = this.detalle.find((detalle) => detalle.codigoPublicacionProducto === item.codigo);
+      console.log("encontro detalle")
       if (detalle) {
         total += this.calcularValor(item.precio, detalle.unidades);
       }

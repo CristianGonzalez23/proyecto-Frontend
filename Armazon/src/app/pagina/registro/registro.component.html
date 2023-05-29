@@ -11,6 +11,16 @@
             </div>
         </div>
         <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Apellido: </label>
+            <div class="col-sm-10">
+                <input #apellido="ngModel" class="form-control" [ngClass]="apellido.invalid &&
+    
+    (apellido.dirty || apellido.touched) ? 'is-invalid' : ''" type="text" apellido="apellido" [(ngModel)]="usuario.apellido"
+                    required maxlength="50" />
+
+            </div>
+        </div>
+        <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Email: </label>
             <div class="col-sm-10">
                 <input #email="ngModel" class="form-control" [ngClass]="email.invalid &&

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { CompraGetDTO } from 'src/app/modelo/compra-get-dto';
+import { Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { DetalleCompraGetDTO } from 'src/app/modelo/detalle-compra-get-dto';
 import { CompraService } from 'src/app/servicios/compra.service';
 import { DetalleCompraService } from 'src/app/servicios/detalle-compra.service';
 import { TokenService } from 'src/app/servicios/token.service';
@@ -10,15 +11,10 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
   templateUrl: './lista-compras.component.html',
   styleUrls: ['./lista-compras.component.css']
 })
-export class ListaComprasComponent {
- // publicacionProductos: PublicacionProductoGetDTO[];
- // seleccionados: PublicacionProductoGetDTO[];
-  compras: CompraGetDTO[];
-  textoBtnEliminar: string;
+export class ListaComprasComponent implements OnInit {
+  compras: DetalleCompraGetDTO[];
   correo: string | null = "";
-  codigoProducto: number = 0;
-  miCodigoVendedor: number = 0;
-  codigoPublicacion: number =0;
+  codigoUsuario: number = 0;
 
   constructor(
     private compraService: CompraService,
@@ -27,7 +23,6 @@ export class ListaComprasComponent {
     private usuarioService: UsuarioService
   ) {
     this.compras = [];
-    this.textoBtnEliminar = "";
   }
 
   ngOnInit(): void {
@@ -36,29 +31,24 @@ export class ListaComprasComponent {
 
   obtenerCompras(): void {
     this.correo = this.tokenService.getEmail();
+
     if (this.correo) {
       this.usuarioService.obtenerID(this.correo).subscribe({
         next: (data) => {
-          this.miCodigoVendedor = data.respuesta;
-          console.log("mi codigo es: "+this.miCodigoVendedor)
-          this.detalleCompraService.listarMisCompras(this.miCodigoVendedor).subscribe({
-            next: (data) => {
-              this.compras = data.respuesta;
-            },
-            error: (error) => {
-              console.log(error.error);
-            },
+          this.codigoUsuario = data.respuesta;
+
+          forkJoin([
+            this.detalleCompraService.listarMisCompras(this.codigoUsuario)
+          ]).subscribe(([comprasData]) => {
+            this.compras = comprasData.respuesta;
+          }, (error) => {
+            console.log(error);
           });
         },
         error: (error) => {
-          console.log(error.error);
+          console.log(error);
         },
       });
-    } else {
-      console.log('El valor de correo es null');
     }
-
-    
   }
-
 }

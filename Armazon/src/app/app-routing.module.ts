@@ -15,6 +15,7 @@ import { RevisarProductosComponent } from './pagina/revisar-productos/revisar-pr
 import { FavoritoComponent } from './pagina/favorito/favorito.component';
 import { AdministradorComponent } from './pagina/administrador/administrador.component';
 import { RestablecerPasswordComponent } from './pagina/restablecer-password/restablecer-password.component';
+import { ListaComprasComponent } from './pagina/lista-compras/lista-compras.component';
 
 
 const routes: Routes = [
@@ -48,7 +49,9 @@ const routes: Routes = [
     data: { expectedRole: ["MODERADOR"] } },
 { path: "revisar-productos", component: RevisarProductosComponent, canActivate: [RolesGuard],
     data: { expectedRole: ["MODERADOR"] } },
-{ path: "**", pathMatch: "full", redirectTo: "" }
+{ path: "**", pathMatch: "full", redirectTo: "" },
+{ path: "listaCompras", component: ListaComprasComponent, canActivate:
+    [RolesGuard], data: { expectedRole: ["CLIENTE"] } }
 
 ];
 @NgModule({

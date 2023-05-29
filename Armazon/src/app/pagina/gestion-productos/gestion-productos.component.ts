@@ -83,21 +83,14 @@ export class GestionProductosComponent implements OnInit {
   }
 
   public borrarProductos() {
-    //const codigosProductos = this.seleccionados.map(item => item.codigoProducto);
-    //const eliminarProductos$ = codigosProductos.map(codigo => this.productoServicio.eliminar(codigo));
-
-    //cambio para tomar codigo de publi en vez de producto
     const codigosPublicaciones = this.seleccionados.map(item => item.codigo);
     const eliminarPublicaciones$ = codigosPublicaciones.map(codigo => this.productoServicio.eliminarPublicacion(codigo));
 
     
     forkJoin(eliminarPublicaciones$).subscribe(
       () => {
-        // Eliminar los productos seleccionados de la lista
         this.publicacionProductos = this.publicacionProductos.filter(item => !this.seleccionados.includes(item));
-        // Limpiar la lista de seleccionados
         this.seleccionados = [];
-        // Actualizar el mensaje
         this.actualizarMensaje();
       },
       error => {

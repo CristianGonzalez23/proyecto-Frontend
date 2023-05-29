@@ -58,29 +58,29 @@
     <div class="row mt-3">
       <div class="col-md-6">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" class="form-control" ngModel required />
+        <input type="text" id="nombre" name="nombre" class="form-control" [ngModel]="usuario.nombre" readonly />
       </div>
       <div class="col-md-6">
         <label for="apellido">Apellido:</label>
-        <input type="text" id="apellido" name="apellido" class="form-control" ngModel required />
+        <input type="text" id="apellido" name="apellido" class="form-control" [ngModel]="usuario.apellido" readonly />
       </div>
     </div>
 
     <div class="row mt-3">
       <div class="col-md-6">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" class="form-control" ngModel required />
+        <input type="email" id="email" name="email" class="form-control" [ngModel]="usuario.email" readonly />
       </div>
       <div class="col-md-6">
         <label for="telefono">Teléfono:</label>
-        <input type="tel" id="telefono" name="telefono" class="form-control" ngModel required />
+        <input type="tel" id="telefono" name="telefono" class="form-control" [ngModel]="usuario.telefono" readonly />
       </div>
     </div>
 
     <div class="row mt-3">
       <div class="col-md-12">
         <label for="direccion">Dirección de envío:</label>
-        <input type="text" id="nombre" name="nombre" class="form-control" ngModel required />
+        <input type="text" id="direccion" name="direccion" class="form-control" [ngModel]="usuario.direccion" readonly />
       </div>
     </div>
 

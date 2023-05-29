@@ -21,35 +21,49 @@ import { ComentarioGetDTO } from 'src/app/modelo/comentario-get-dto';
   styleUrls: ['./detalle-producto.component.css'],
 })
 export class DetalleProductoComponent implements OnInit {
-  //cambios comentario +
   alerta!: Alerta;
-  // comentarioTexto: string = '';
   comentarios: ComentarioDTO[] = [];
   valoracionSeleccionada: number = 0;
   comentario: ComentarioDTO;
-  correo: String | null = '';
 
-  //fin cambios comentario
+  comentarioFavoritoAuxiliar: ComentarioDTO;
+
+  correo: String | null = '';
 
   codigoProducto: number = 0;
   publicacion: PublicacionProductoGetDTO;
   detalleCompra!: DetalleCompraDTO;
   isFavorite: boolean = false;
-
+  codigoUsuario: number = 0;
   constructor(
     private route: ActivatedRoute,
     private carritoService: CarritoService,
     private productoService: ProductoService,
     private favoritoService: FavoritoService,
 
-    //cambios para comentario !!!
     private comentarioService: ComentarioService,
     private tokenService: TokenService,
     private usuarioService: UsuarioService ///
+
   ) {
     this.publicacion = new PublicacionProductoGetDTO(0,0,new Date,0,0,"",0,0,"",new ProductoGetDTO("",[],[],[],[]), []);//productoService.obtener(1);
     this.comentario = new ComentarioDTO('', 0, 0, 0);
+    this.comentarioFavoritoAuxiliar =  new ComentarioDTO('', 0, 0, 0);
+    this.correo = this.tokenService.getEmail();
+
+    if (this.correo) {
+      this.usuarioService.obtenerID(this.correo).subscribe({
+        next: (data) => {
+          this.codigoUsuario = data.respuesta;
+          
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
+    }
   }
+
 
   ngOnInit(): void {
     const codigo = this.route.snapshot.paramMap.get('codigo');
@@ -57,7 +71,7 @@ export class DetalleProductoComponent implements OnInit {
     this.productoService.obtenerPublicacion(this.codigoProducto).subscribe({
       next: (data) => {
         this.publicacion = data.respuesta;
-        this.obtenerComentarios(); // Llama al método para obtener los comentarios después de obtener la publicación
+        this.obtenerComentarios(); 
       },
       error: (error) => {
         console.log(error.error);
@@ -73,8 +87,6 @@ export class DetalleProductoComponent implements OnInit {
   quitarCarrito(): void {
     this.carritoService.quitar(this.codigoProducto);
   }
-
-  //---------- nuevo metodo----------
 
   getStarClass(starNumber: number): string {
     const roundedStars = Math.round(starNumber);
@@ -98,21 +110,18 @@ export class DetalleProductoComponent implements OnInit {
     return Array(roundedStars).fill(0);
   }
 
-  // -------------fin------------
 
   toggleFavorite(): void {
     this.isFavorite = !this.isFavorite;
   }
-
-  //--------------------------------------envio comentario y borrar comentario +
   enviarComentario() {
     this.correo = this.tokenService.getEmail();
 
     if (this.correo) {
       this.usuarioService.obtenerID(this.correo).subscribe({
         next: (data) => {
-          this.comentario.texto = this.comentario.texto; // Asignar el valor del comentario al campo 'texto'
-          this.comentario.estrellas = this.valoracionSeleccionada; // Asignar la valoración seleccionada
+          this.comentario.texto = this.comentario.texto;
+          this.comentario.estrellas = this.valoracionSeleccionada; 
           this.comentario.codigoUsuario = data.respuesta;
           this.comentario.codigoPublicacionProducto = this.publicacion.codigo;
           console.log(
@@ -126,14 +135,12 @@ export class DetalleProductoComponent implements OnInit {
           this.comentarioService.crearComentario(this.comentario).subscribe({
             next: (data) => {
               objeto.alerta = new Alerta(data.respuesta, 'success');
-              location.reload(); // Refrescar la página
+              location.reload(); 
             },
             error: (error) => {
               objeto.alerta = new Alerta(error.error.respuesta, 'danger');
             },
           });
-
-          //this.obtenerComentarios();
         },
         error: (error) => {
           console.log(error.error);
@@ -145,16 +152,11 @@ export class DetalleProductoComponent implements OnInit {
   }
 
   borrarComentario() {
-    // Aquí puedes realizar acciones con el comentario, como enviarlo al servidor
     console.log('Comentario enviado:', this.comentario.texto);
-
-    // Puedes restablecer el texto del comentario después de enviarlo
     this.comentario.texto = '';
   }
 
   obtenerComentarios() {
-    // Lógica para obtener los comentarios, por ejemplo, desde una API
-    // y asignarlos a la lista comentarios
     this.comentarioService.listarComentarios(this.publicacion.codigo);
     console.log(
       'los comentarios son:' +
@@ -163,10 +165,14 @@ export class DetalleProductoComponent implements OnInit {
         )
     );
   }
-  //fin envio comentario
-  // Agrega el método listarFavoritos en tu componente
   agregarPublicacionFavorita() {
-    this.favoritoService.agregarPublicacionFavorita(this.publicacion.codigoVendedor,this.codigoProducto);
+    
+    this.comentarioFavoritoAuxiliar.codigoPublicacionProducto=this.codigoProducto;
+    this.comentarioFavoritoAuxiliar.codigoUsuario=this.codigoUsuario;
+
+    console.log("codigo usuario "+this.comentarioFavoritoAuxiliar.codigoPublicacionProducto)
+    console.log("codigo publicacion "+ this.comentarioFavoritoAuxiliar.codigoUsuario)
+    this.favoritoService.agregarPublicacionFavorita(this.comentarioFavoritoAuxiliar);
     
   }
   eliminarPublicacionFavorita() {

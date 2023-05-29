@@ -1,47 +1,35 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MensajeDTO } from '../modelo/mensaje-dto';
-import { Observable } from 'rxjs';
 import { ProductoService } from './producto.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ComentarioDTO } from '../modelo/comentario-dto';
+
 @Injectable({
   providedIn: 'root'
 })
 export class FavoritoService {
-  
-  
-  public agregar(codigo: number){
-
-    if (!this.productoYaAgregado(codigo)) {
-      this.productos.push(codigo);
-    }
-
-  }
-  public eliminar(codigo: number){
-
-    if (!this.productoYaAgregado(codigo)) {
-      this.productos.splice(codigo);
-    }
-
-  }
-
   productos: number[];
-  private comURL = "http://localhost:8081/api/favorito";
- 
+  private favoURL = "http://localhost:8081/api/favorito";
+  
   constructor(
     private http: HttpClient,
-    private productoService: ProductoService 
   ) {
     this.productos = [];
   }
 
-  public agregarPublicacionFavorita(idUsuario:number, idPublicacion:number): Observable<MensajeDTO>{
 
-    return this.http.get<MensajeDTO>(`${this.comURL}/agregar/${idUsuario}/${idPublicacion}`);
-  }
+
+    public agregarPublicacionFavorita(comentario : ComentarioDTO): Observable<MensajeDTO>{
+      console.log("favService user "+comentario.codigoUsuario)
+      console.log("favService publi "+comentario.codigoPublicacionProducto)
+      return this.http.post<MensajeDTO>(`${this.favoURL}/agregar`,comentario);
+    }
 
   public eliminarPublicacionFavorita(idUsuario:number, idPublicacion:number): Observable<MensajeDTO>{
 
-    return this.http.get<MensajeDTO>(`${this.comURL}/eliminar/${idUsuario}/${idPublicacion}`);
+    return this.http.get<MensajeDTO>(`${this.favoURL}/eliminar/${idUsuario}/${idPublicacion}`);
   }
   /*
   public listarFavoritos(): number[] {
@@ -59,7 +47,4 @@ export class FavoritoService {
 
   }
 
-  private productoYaAgregado(codigo: number): boolean {
-    return this.productos.includes(codigo);
-  }
 }

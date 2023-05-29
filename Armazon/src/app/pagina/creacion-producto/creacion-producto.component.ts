@@ -26,11 +26,6 @@ export class CreacionProductoComponent implements OnInit {
   esEdicion: boolean = false;
   codigoProducto: number;
   correo: String | null = '';
-  /*
-  categorias: string[] = [];
-  categoriasSeleccionadas: string[] = [];
-  categoriaSeleccionada: string | null = null;
-*/
   categorias: any[] = [];
   categoriasSeleccionadas: any[] = [];
   categoriaSeleccionada: any | null = null;
@@ -59,15 +54,7 @@ export class CreacionProductoComponent implements OnInit {
     this.obtenerCat();
 
     this.route.params.subscribe((params) => {
-      //     promedioEstrellas: number = 0;
-      // fechaLimite: Date = new Date();
-      // precio: number = 0;
-      // disponibilidad: number = 0;
-      // descripcion: string = '';
-      // codigoVendedor: number = 0;
-      // codigoProducto: number = 0;
-      // productoDTO: ProductoDTO = new ProductoDTO('nombrecito', [''], [''], ['']);
-      // comentarioDTO: ComentarioDTO[] = [];
+    
       this.codigoProducto = params['codigo'];
       console.log('cod producto es' + this.codigoProducto);
       if (this.codigoProducto != null) {
@@ -178,11 +165,7 @@ export class CreacionProductoComponent implements OnInit {
     if (this.producto.productoDTO.imagenes.length > 0) {
       this.correo = this.tokenService.getEmail();
       this.producto.productoDTO.categorias = this.categoriasSeleccionadas;
-      this.producto.productoDTO.ciudades = this.ciudadesSeleccionadas; // Asignar el arreglo de categorías seleccionadas
-      // console.log(
-      //   'El producto de la publicación es:' +
-      //   JSON.stringify(this.producto.productoDTO)
-      // );
+      this.producto.productoDTO.ciudades = this.ciudadesSeleccionadas; 
       if (this.correo) {
         this.usuarioService.obtenerID(this.correo).subscribe({
           next: (data) => {
@@ -207,7 +190,6 @@ export class CreacionProductoComponent implements OnInit {
                   },
                 });
             }
-            ////
           },
           error: (error) => {
             console.log(error.error);
@@ -223,7 +205,6 @@ export class CreacionProductoComponent implements OnInit {
 
   public actualizarDatos() {
     const objeto = this;
-    // Lógica para actualizar los datos
     this.producto.productoDTO.categorias = this.categoriasSeleccionadas;
     this.producto.productoDTO.ciudades = this.ciudadesSeleccionadas;
 
@@ -258,8 +239,6 @@ export class CreacionProductoComponent implements OnInit {
         .subscribe({
           next: (data) => {
             objeto.productoDTO.imagenes.push(data.respuesta.url);
-
-            // Aquí puedes manejar la respuesta del backend si es necesario
           },
           error: (error) => {
             console.log(error.error);

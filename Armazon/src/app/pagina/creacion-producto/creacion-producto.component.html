@@ -105,8 +105,12 @@
         </div>
         <div>
         </div>
-        <button type="submit" [disabled]="f.invalid" class="btn btn-primary" (click)="crearProducto()">
+        <button *ngIf="!esEdicion" [disabled]="f.invalid" class="btn btn-primary" (click)="crearProducto()">
             <i class="fa-solid fa-circle-plus me-1"></i> Crear Producto
-        </button>
+          </button>
+        <!-- boton solo para editar -->
+        <button *ngIf="esEdicion" class="btn btn-success" (click)="actualizarDatos()">
+            <i class="fa-solid fa-sync"></i> Actualizar datos
+          </button>
     </form>
 </div>

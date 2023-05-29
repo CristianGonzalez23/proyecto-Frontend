@@ -20,7 +20,7 @@ export class BusquedaComponent {
   ) {
     this.textoBusqueda = '';
 
-    this.productoService.listarTodasLasPublicaciones().subscribe({
+    this.productoService.listarTodasLasPublicacionesExcluyendo().subscribe({
       next: (data) => {
         this.productos = data.respuesta;
       },

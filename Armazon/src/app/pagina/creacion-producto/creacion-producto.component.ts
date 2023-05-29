@@ -39,6 +39,7 @@ export class CreacionProductoComponent implements OnInit {
   ciudadesSeleccionadas: any[] = [];
   ciudadSeleccionada: any | null = null;
   alerta!: Alerta;
+  mostrarActualizarDatos: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -68,30 +69,35 @@ export class CreacionProductoComponent implements OnInit {
       // productoDTO: ProductoDTO = new ProductoDTO('nombrecito', [''], [''], ['']);
       // comentarioDTO: ComentarioDTO[] = [];
       this.codigoProducto = params['codigo'];
-
+      console.log('cod producto es' + this.codigoProducto);
       if (this.codigoProducto != null) {
         this.productoService.obtenerPublicacion(this.codigoProducto).subscribe({
           next: (data) => {
             this.objetoProducto = data.respuesta;
+            console.log(
+              'objeto obtenido es' + JSON.stringify(this.objetoProducto)
+            );
+            if (this.objetoProducto != null) {
+              this.producto.codigoPublicacion = this.objetoProducto.codigo;
+              this.producto.promedioEstrellas =
+                this.objetoProducto.promedioEstrellas;
+              this.producto.fechaLimite = this.objetoProducto.fechaLimite;
+              this.producto.precio = this.objetoProducto.precio;
+              this.producto.disponibilidad = this.objetoProducto.disponibilidad;
+              this.producto.descripcion = this.objetoProducto.descripcion;
+              this.producto.codigoVendedor = this.objetoProducto.codigoVendedor;
+              this.producto.codigoProducto = this.objetoProducto.codigoProducto;
+              this.producto.productoDTO = this.objetoProducto.productoGetDTO;
+              this.producto.comentarioDTO =
+                this.objetoProducto.comentarioGetDTO;
+              this.esEdicion = true;
+              this.mostrarActualizarDatos = true;
+            }
           },
           error: (error) => {
             console.log(error.error);
           },
         });
-        if (this.objetoProducto != null) {
-          this.producto.codigoPublicacion = this.objetoProducto.codigo;
-          this.producto.promedioEstrellas =
-            this.objetoProducto.promedioEstrellas;
-          this.producto.fechaLimite = this.objetoProducto.fechaLimite;
-          this.producto.precio = this.objetoProducto.precio;
-          this.producto.disponibilidad = this.objetoProducto.disponibilidad;
-          this.producto.descripcion = this.objetoProducto.descripcion;
-          this.producto.codigoVendedor = this.objetoProducto.codigoVendedor;
-          this.producto.codigoProducto = this.objetoProducto.codigoProducto;
-          this.producto.productoDTO = this.objetoProducto.productoGetDTO;
-          this.producto.comentarioDTO = this.objetoProducto.comentarioGetDTO;
-          this.esEdicion = true;
-        }
       }
     });
   }
@@ -184,19 +190,7 @@ export class CreacionProductoComponent implements OnInit {
             ////
             const objeto = this;
             if (this.producto.codigoProducto > 0) {
-              this.productoService
-                .actualizarPublicacionProducto(
-                  this.producto.codigoProducto,
-                  this.producto
-                )
-                .subscribe({
-                  next: (data) => {
-                    objeto.alerta = new Alerta(data.respuesta, 'success');
-                  },
-                  error: (error) => {
-                    objeto.alerta = new Alerta(error.error.respuesta, 'danger');
-                  },
-                });
+              this.actualizarDatos();
             } else {
               console.log(
                 'el codigo del venedor es' + this.producto.codigoVendedor
@@ -225,6 +219,28 @@ export class CreacionProductoComponent implements OnInit {
     } else {
       console.log('Debe seleccionar al menos una imagen y subirla');
     }
+  }
+
+  public actualizarDatos() {
+    const objeto = this;
+    // Lógica para actualizar los datos
+    this.producto.productoDTO.categorias = this.categoriasSeleccionadas;
+    this.producto.productoDTO.ciudades = this.ciudadesSeleccionadas;
+
+    console.log('Actualizar datos');
+    this.productoService
+      .actualizarPublicacionProducto(
+        this.producto.codigoProducto,
+        this.producto
+      )
+      .subscribe({
+        next: (data) => {
+          objeto.alerta = new Alerta(data.respuesta, 'success');
+        },
+        error: (error) => {
+          objeto.alerta = new Alerta(error.error.respuesta, 'danger');
+        },
+      });
   }
 
   public subirImagenes() {

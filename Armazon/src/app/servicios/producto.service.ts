@@ -26,125 +26,7 @@ export class ProductoService {
 
   constructor(private http: HttpClient) {
     this.productos = [];
-    this.productos.push(
-      new PublicacionProductoGetDTO(
-        1,
-        0,
-        new Date(),
-        100000,
-        25,
-        'Publicacion prueba description',
-        1,
-        1,
-        'APROBADO',
-        this.productoAux,
-        []
-      )
-    );
-    this.productos.push(
-      new PublicacionProductoGetDTO(
-        1,
-        0,
-        new Date(),
-        100000,
-        25,
-        'Publicacion prueba description',
-        1,
-        1,
-        'APROBADO',
-        this.productoAux,
-        []
-      )
-    );
-    this.productos.push(
-      new PublicacionProductoGetDTO(
-        1,
-        0,
-        new Date(),
-        100000,
-        25,
-        'Publicacion prueba description',
-        1,
-        1,
-        'APROBADO',
-        this.productoAux,
-        []
-      )
-    );
-    this.productos.push(
-      new PublicacionProductoGetDTO(
-        1,
-        0,
-        new Date(),
-        100000,
-        25,
-        'Publicacion prueba description',
-        1,
-        1,
-        'APROBADO',
-        this.productoAux,
-        []
-      )
-    );
-    this.productos.push(
-      new PublicacionProductoGetDTO(
-        1,
-        0,
-        new Date(),
-        100000,
-        25,
-        'Publicacion prueba description',
-        1,
-        1,
-        'APROBADO',
-        this.productoAux,
-        []
-      )
-    );
-    this.productos.push(
-      new PublicacionProductoGetDTO(
-        1,
-        0,
-        new Date(),
-        100000,
-        25,
-        'Publicacion prueba description',
-        1,
-        1,
-        'APROBADO',
-        this.productoAux,
-        []
-      )
-    );
-    this.productos.push(
-      new PublicacionProductoGetDTO(
-        1,
-        0,
-        new Date(),
-        100000,
-        25,
-        'Publicacion prueba description',
-        1,
-        1,
-        'APROBADO',
-        this.productoAux,
-        []
-      )
-    );
-    this.productos.push(
-      new PublicacionProductoGetDTO(
-        1,
-        0,
-        new Date(),
-        100000,
-        25,
-        'Publicacion prueba description',
-        1,
-        1,
-        'APROBADO',
-        this.productoAux,
-        []
-      )
+    this.productos.push( 
     );
   }
   public listar(): PublicacionProductoGetDTO[] {
@@ -153,8 +35,9 @@ export class ProductoService {
 
   public obtener(codigo: number): PublicacionProductoGetDTO {
     // Busca la publicación correspondiente al código dado
-
-    const publicacion = this.productos.find((p) => p.codigoProducto == codigo);
+    console.log('el codigo de la publicacion enviada desde form es ' + codigo);
+  //  const publicacion = this.productos.find((p) => p.codigo == codigo);
+    const publicacion= this.obtener(codigo);
     // Lanza un error si no se encuentra la publicación
     if (!publicacion) {
       throw new Error(
@@ -168,9 +51,15 @@ export class ProductoService {
   public crearPublicacionProducto(
     publicacion: PublicacionProductoDTO
   ): Observable<MensajeDTO> {
-    console.log("desde producto service: cod producto "+publicacion.codigoProducto)
-    console.log("desde producto service: cod publi "+publicacion.codigoPublicacion)
-    console.log("desde producto service: cod vendedor "+publicacion.codigoVendedor)
+    console.log(
+      'desde producto service: cod producto ' + publicacion.codigoProducto
+    );
+    console.log(
+      'desde producto service: cod publi ' + publicacion.codigoPublicacion
+    );
+    console.log(
+      'desde producto service: cod vendedor ' + publicacion.codigoVendedor
+    );
 
     return this.http.post<MensajeDTO>(`${this.publiUrl}/crear`, publicacion);
   }
@@ -187,9 +76,17 @@ export class ProductoService {
     );
   }
 
-  public actualizarPublicacionProducto(codigoPublicacion: number, publicacionProductoDTO:PublicacionProductoDTO): Observable<MensajeDTO> {
+  public eliminarPublicacion(codigo: number): Observable<MensajeDTO> {
+    return this.http.delete<MensajeDTO>(`${this.publiUrl}/eliminar/${codigo}`);
+  }
+
+  public actualizarPublicacionProducto(
+    codigoPublicacion: number,
+    publicacionProductoDTO: PublicacionProductoDTO
+  ): Observable<MensajeDTO> {
     return this.http.put<MensajeDTO>(
-      `${this.publiUrl}/actualizar/${codigoPublicacion}`, publicacionProductoDTO
+      `${this.publiUrl}/actualizar/${codigoPublicacion}`,
+      publicacionProductoDTO
     );
   }
 
@@ -212,8 +109,12 @@ export class ProductoService {
   }
 
   public listarTodasLasPublicaciones(): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.publiUrl}/listarPublicaciones`);
+  }
+
+  public listarTodasLasPublicacionesExcluyendo(): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(
-      `${this.publiUrl}/listarPublicaciones`
+      `${this.publiUrl}/listarPublicacionesExcluyendo`
     );
   }
 
@@ -229,4 +130,11 @@ export class ProductoService {
     );
   }
 
-}
+  public listarMisPublicacionesFavoritas(codigoUsuario: number): Observable<MensajeDTO>{
+
+    return this.http.get<MensajeDTO>(
+      `${this.publiUrl}/listarMisPublicacionesFavoritas/${codigoUsuario}`
+    );
+  }
+  }
+

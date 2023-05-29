@@ -17,6 +17,7 @@ export class GestionProductosComponent implements OnInit {
   correo: string | null = "";
   codigoProducto: number = 0;
   miCodigoVendedor: number = 0;
+  codigoPublicacion: number =0;
 
   constructor(
     private productoServicio: ProductoService,
@@ -39,8 +40,6 @@ export class GestionProductosComponent implements OnInit {
         next: (data) => {
           this.miCodigoVendedor = data.respuesta;
           console.log("mi codigo es: "+this.miCodigoVendedor)
-
-          ////////cambio prueba
           this.productoServicio.listarMisPublicaciones(this.miCodigoVendedor).subscribe({
             next: (data) => {
               this.publicacionProductos = data.respuesta;
@@ -49,11 +48,6 @@ export class GestionProductosComponent implements OnInit {
               console.log(error.error);
             },
           });
-
-
-          ////////
-
-
         },
         error: (error) => {
           console.log(error.error);
@@ -89,10 +83,15 @@ export class GestionProductosComponent implements OnInit {
   }
 
   public borrarProductos() {
-    const codigosProductos = this.seleccionados.map(item => item.codigoProducto);
-    const eliminarProductos$ = codigosProductos.map(codigo => this.productoServicio.eliminar(codigo));
+    //const codigosProductos = this.seleccionados.map(item => item.codigoProducto);
+    //const eliminarProductos$ = codigosProductos.map(codigo => this.productoServicio.eliminar(codigo));
+
+    //cambio para tomar codigo de publi en vez de producto
+    const codigosPublicaciones = this.seleccionados.map(item => item.codigo);
+    const eliminarPublicaciones$ = codigosPublicaciones.map(codigo => this.productoServicio.eliminarPublicacion(codigo));
+
     
-    forkJoin(eliminarProductos$).subscribe(
+    forkJoin(eliminarPublicaciones$).subscribe(
       () => {
         // Eliminar los productos seleccionados de la lista
         this.publicacionProductos = this.publicacionProductos.filter(item => !this.seleccionados.includes(item));

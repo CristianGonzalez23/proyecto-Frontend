@@ -11,6 +11,7 @@ import { ComentarioService } from 'src/app/servicios/comentario.service';
 import { Alerta } from 'src/app/modelo/alerta';
 import { TokenService } from 'src/app/servicios/token.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { FavoritoService } from 'src/app/servicios/favorito.service';
 
 @Component({
   selector: 'app-detalle-producto',
@@ -37,6 +38,8 @@ export class DetalleProductoComponent implements OnInit {
     private route: ActivatedRoute,
     private carritoService: CarritoService,
     private productoService: ProductoService,
+    private favoritoService: FavoritoService,
+
     //cambios para comentario !!!
     private comentarioService: ComentarioService,
     private tokenService: TokenService,
@@ -159,4 +162,16 @@ export class DetalleProductoComponent implements OnInit {
     );
   }
   //fin envio comentario
+  // Agrega el método listarFavoritos en tu componente
+  agregarPublicacionFavorita() {
+    this.favoritoService.agregarPublicacionFavorita(this.publicacion.codigoVendedor,this.codigoProducto);
+    
+  }
+  eliminarPublicacionFavorita() {
+    this.favoritoService.eliminarPublicacionFavorita(this.publicacion.codigoVendedor,this.codigoProducto);
+    
+  }
+
+  
+
 }

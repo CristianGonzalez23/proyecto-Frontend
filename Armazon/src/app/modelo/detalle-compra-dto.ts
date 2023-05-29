@@ -5,10 +5,10 @@ import { PublicacionProductoGetDTO } from './publicacion-producto-get-dto';
 
 export class DetalleCompraDTO {
   unidades: number = 0;
-  publicacionProducto: PublicacionProductoGetDTO;
+  codigoPublicacionProducto: number;
 
-  constructor(unidades: number, publicacionProducto: PublicacionProductoGetDTO) {
+  constructor(unidades: number, codigoPublicacionProducto: number) {
     this.unidades = unidades;
-    this.publicacionProducto = publicacionProducto;
+    this.codigoPublicacionProducto = codigoPublicacionProducto;
   }
 }

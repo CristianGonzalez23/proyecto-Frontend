@@ -22,7 +22,8 @@ const routes: Routes = [
 { path: "login", component: LoginComponent, canActivate: [LoginGuard] },
 { path: "registro", component: RegistroComponent, canActivate: [LoginGuard] },
 { path: "restablecer-password", component: RestablecerPasswordComponent, canActivate: [LoginGuard]},
-
+{ path: "favorito", component: FavoritoComponent , canActivate:
+[RolesGuard], data: { expectedRole: ["CLIENTE"] } },
 { path: "publicacionProducto", component: CreacionProductoComponent , canActivate:
 [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
 { path: "busqueda/:texto", component: BusquedaComponent },
